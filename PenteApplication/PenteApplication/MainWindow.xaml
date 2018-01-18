@@ -26,10 +26,8 @@
             </UniformGrid>
             <Label x:Name="lblP1Announcement" Content="p1" Margin="0, 15, 0, 0"/>
             <Label x:Name="lblP2Announcement" Content="p2" Margin="0, 15, 0, 0"/>
-            
+
         </StackPanel>
-        Title="Pente" Height="700" Width="1050">
-    <Grid Name="Main">
         <Grid Name="MainMenu"
               Visibility="Visible">
             <Grid.RowDefinitions>
@@ -85,7 +83,7 @@
                            FontSize="48"
                            Grid.Column="0"
                            Margin="0 0 20 0">
-                    Player 1's Name: 
+                    Player 1's Name:
                 </TextBlock>
                 <TextBox Name="Player1NameTextBox"
                          Grid.Column="1"
