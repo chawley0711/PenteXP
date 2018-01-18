@@ -8,34 +8,37 @@
         Title="Pente" Height="700" Width="1050">
 
     <Grid x:Name="Main" Background="#87adde">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="2*" />
-        </Grid.ColumnDefinitions>
-        <UniformGrid x:Name="Gameboard" Grid.Column="1" Rows="18" Columns="18" Margin="25" Background="BurlyWood">
+        <Grid x:Name="PlayGame"
+              Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+            <UniformGrid x:Name="Gameboard" Grid.Column="1" Rows="18" Columns="18" Margin="25" Background="BurlyWood">
 
-        </UniformGrid>
-        <Border BorderBrush="Black" BorderThickness="3" Width="3" Height="700" HorizontalAlignment="Right" Margin="0, 0, 0, 0"/>
-        <StackPanel x:Name="GameInfo" Margin="5">
-
-            <Label x:Name="lblPlayer" Content="Player Name" HorizontalAlignment="Center" />
-
-            <UniformGrid Columns="2" Margin="0, 15, 0, 0">
-                <Label x:Name="lblP1Captures" Content="P1 Captures: " />
-                <Label x:Name="lblP2Captures" Content="P2 Captures: " />
             </UniformGrid>
-            <Label x:Name="lblP1Announcement" Content="p1" Margin="0, 15, 0, 0"/>
-            <Label x:Name="lblP2Announcement" Content="p2" Margin="0, 15, 0, 0"/>
+            <Border BorderBrush="Black" BorderThickness="3" Width="3" Height="700" HorizontalAlignment="Right" Margin="0, 0, 0, 0"/>
+            <StackPanel x:Name="GameInfo" Margin="5">
 
-        </StackPanel>
-        <Grid Name="MainMenu"
+                <Label x:Name="lblPlayer" Content="Player Name" HorizontalAlignment="Center" />
+
+                <UniformGrid Columns="2" Margin="0, 15, 0, 0">
+                    <Label x:Name="lblP1Captures" Content="P1 Captures: " />
+                    <Label x:Name="lblP2Captures" Content="P2 Captures: " />
+                </UniformGrid>
+                <Label x:Name="lblP1Announcement" Content="p1" Margin="0, 15, 0, 0"/>
+                <Label x:Name="lblP2Announcement" Content="p2" Margin="0, 15, 0, 0"/>
+
+            </StackPanel>
+        </Grid>
+        <Grid x:Name="MainMenu"
               Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40*"/>
                 <RowDefinition Height="30*"/>
                 <RowDefinition Height="30*"/>
             </Grid.RowDefinitions>
-            <TextBlock Name="Title"
+            <TextBlock x:Name="Title"
                        Grid.Row="0"
                        TextAlignment="Center"
                        VerticalAlignment="Center"
@@ -44,7 +47,7 @@
                        FontWeight="DemiBold">
                 Pente
             </TextBlock>
-            <Button Name="PvPButton"
+            <Button x:Name="PvPButton"
                     Grid.Row="1"
                     Height="100"
                     Width="400"
@@ -54,7 +57,7 @@
                     >
                 Player VS Player
             </Button>
-            <Button Name="PvCButton"
+            <Button x:Name="PvCButton"
                     Grid.Row="2"
                     Height="100"
                     Width="400"
@@ -65,19 +68,19 @@
                 Player VS Computer
             </Button>
         </Grid>
-        <Grid Name="NamePlayer1"
+        <Grid x:Name="NamePlayer1"
               Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50*" />
                 <RowDefinition Height="50*" />
             </Grid.RowDefinitions>
-            <Grid Name="Player1Entry"
+            <Grid x:Name="Player1Entry"
                   Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50*"/>
                     <ColumnDefinition Width="50*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Name="Player1"
+                <TextBlock x:Name="Player1"
                            TextAlignment="Right"
                            VerticalAlignment="Bottom"
                            FontSize="48"
@@ -85,7 +88,7 @@
                            Margin="0 0 20 0">
                     Player 1's Name:
                 </TextBlock>
-                <TextBox Name="Player1NameTextBox"
+                <TextBox x:Name="Player1NameTextBox"
                          Grid.Column="1"
                          Height="75"
                          Width="350"
@@ -97,7 +100,7 @@
                          VerticalContentAlignment="Center">
                 </TextBox>
             </Grid>
-            <Button Name="Player1SubmitButton"
+            <Button x:Name="Player1SubmitButton"
                     Grid.Row="1"
                     Height="75"
                     Width="250"
@@ -109,19 +112,19 @@
                 Submit
             </Button>
         </Grid>
-        <Grid Name="NamePlayer2"
+        <Grid x:Name="NamePlayer2"
               Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50*" />
                 <RowDefinition Height="50*" />
             </Grid.RowDefinitions>
-            <Grid Name="Player2Entry"
+            <Grid x:Name="Player2Entry"
                   Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50*"/>
                     <ColumnDefinition Width="50*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Name="Player2"
+                <TextBlock x:Name="Player2"
                            TextAlignment="Right"
                            VerticalAlignment="Bottom"
                            FontSize="48"
@@ -129,7 +132,7 @@
                            Margin="0 0 20 0">
                     Player 2's Name:
                 </TextBlock>
-                <TextBox Name="Player2NameTextBox"
+                <TextBox x:Name="Player2NameTextBox"
                          Grid.Column="1"
                          Height="75"
                          Width="350"
@@ -141,7 +144,7 @@
                          VerticalContentAlignment="Center">
                 </TextBox>
             </Grid>
-            <Button Name="Player2SubmitButton"
+            <Button x:Name="Player2SubmitButton"
                     Grid.Row="1"
                     Height="75"
                     Width="250"
