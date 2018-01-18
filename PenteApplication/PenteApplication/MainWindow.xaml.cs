@@ -23,6 +23,23 @@ namespace PenteApplication
         public MainWindow()
         {
             InitializeComponent();
+            fillGameGrid();
+            
+        }
+        public void fillGameGrid()
+        {
+
+            for(int i = 0; i < Gameboard.Rows; i++)
+            {
+                for(int j = 0; j < Gameboard.Columns; j++)
+                {
+                    Label filler = new Label();
+                    filler.Background = Brushes.DarkGoldenrod;
+                    filler.BorderThickness = new Thickness(.75);
+                    Gameboard.Children.Add(filler);
+                }
+            }
+
         }
 
         private void PvPButton_Click(object sender, RoutedEventArgs e)

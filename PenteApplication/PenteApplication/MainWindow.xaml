@@ -6,6 +6,29 @@
         xmlns:local="clr-namespace:PenteApplication"
         mc:Ignorable="d"
         Title="Pente" Height="700" Width="1050">
+
+    <Grid x:Name="Main" Background="#87adde">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <UniformGrid x:Name="Gameboard" Grid.Column="1" Rows="18" Columns="18" Margin="25" Background="BurlyWood">
+
+        </UniformGrid>
+        <Border BorderBrush="Black" BorderThickness="3" Width="3" Height="700" HorizontalAlignment="Right" Margin="0, 0, 0, 0"/>
+        <StackPanel x:Name="GameInfo" Margin="5">
+
+            <Label x:Name="lblPlayer" Content="Player Name" HorizontalAlignment="Center" />
+
+            <UniformGrid Columns="2" Margin="0, 15, 0, 0">
+                <Label x:Name="lblP1Captures" Content="P1 Captures: " />
+                <Label x:Name="lblP2Captures" Content="P2 Captures: " />
+            </UniformGrid>
+            <Label x:Name="lblP1Announcement" Content="p1" Margin="0, 15, 0, 0"/>
+            <Label x:Name="lblP2Announcement" Content="p2" Margin="0, 15, 0, 0"/>
+            
+        </StackPanel>
+        Title="Pente" Height="700" Width="1050">
     <Grid Name="Main">
         <Grid Name="MainMenu"
               Visibility="Visible">
