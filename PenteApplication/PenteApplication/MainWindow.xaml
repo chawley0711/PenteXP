@@ -5,8 +5,132 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PenteApplication"
         mc:Ignorable="d"
-        Title="Pente" Height="350" Width="525">
-    <Grid>
-        
+        Title="Pente" Height="700" Width="1050">
+    <Grid Name="Main">
+        <Grid Name="MainMenu"
+              Visibility="Visible">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="30*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Name="Title"
+                       Grid.Row="0"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="175"
+                       FontFamily="Lucida Sans"
+                       FontWeight="DemiBold">
+                Pente
+            </TextBlock>
+            <Button Name="PvPButton"
+                    Grid.Row="1"
+                    Height="100"
+                    Width="400"
+                    FontSize="40"
+                    FontFamily="Lucida Sans"
+                    Click="PvPButton_Click"
+                    >
+                Player VS Player
+            </Button>
+            <Button Name="PvCButton"
+                    Grid.Row="2"
+                    Height="100"
+                    Width="400"
+                    FontSize="40"
+                    FontFamily="Lucida Sans"
+                    Click="PvCButton_Click"
+                    >
+                Player VS Computer
+            </Button>
+        </Grid>
+        <Grid Name="NamePlayer1"
+              Visibility="Hidden">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50*" />
+                <RowDefinition Height="50*" />
+            </Grid.RowDefinitions>
+            <Grid Name="Player1Entry"
+                  Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*"/>
+                    <ColumnDefinition Width="50*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Name="Player1"
+                           TextAlignment="Right"
+                           VerticalAlignment="Bottom"
+                           FontSize="48"
+                           Grid.Column="0"
+                           Margin="0 0 20 0">
+                    Player 1's Name: 
+                </TextBlock>
+                <TextBox Name="Player1NameTextBox"
+                         Grid.Column="1"
+                         Height="75"
+                         Width="350"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Bottom"
+                         Margin="20 0 0 0"
+                         FontSize="36"
+                         HorizontalContentAlignment="Center"
+                         VerticalContentAlignment="Center">
+                </TextBox>
+            </Grid>
+            <Button Name="Player1SubmitButton"
+                    Grid.Row="1"
+                    Height="75"
+                    Width="250"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Margin="0 40 0 0 "
+                    FontSize="40"
+                    Click="Player1SubmitButton_Click">
+                Submit
+            </Button>
+        </Grid>
+        <Grid Name="NamePlayer2"
+              Visibility="Hidden">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50*" />
+                <RowDefinition Height="50*" />
+            </Grid.RowDefinitions>
+            <Grid Name="Player2Entry"
+                  Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*"/>
+                    <ColumnDefinition Width="50*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Name="Player2"
+                           TextAlignment="Right"
+                           VerticalAlignment="Bottom"
+                           FontSize="48"
+                           Grid.Column="0"
+                           Margin="0 0 20 0">
+                    Player 2's Name:
+                </TextBlock>
+                <TextBox Name="Player2NameTextBox"
+                         Grid.Column="1"
+                         Height="75"
+                         Width="350"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Bottom"
+                         Margin="20 0 0 0"
+                         FontSize="36"
+                         HorizontalContentAlignment="Center"
+                         VerticalContentAlignment="Center">
+                </TextBox>
+            </Grid>
+            <Button Name="Player2SubmitButton"
+                    Grid.Row="1"
+                    Height="75"
+                    Width="250"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Margin="0 40 0 0 "
+                    FontSize="40"
+                    Click="Player2SubmitButton_Click">
+                Submit
+            </Button>
+        </Grid>
     </Grid>
 </Window>

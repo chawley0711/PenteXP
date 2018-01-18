@@ -24,5 +24,15 @@ namespace PenteApplication
         {
             InitializeComponent();
         }
+
+        private void PvPButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PvCButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
