@@ -30,9 +30,9 @@ namespace PenteApplication
             fillGameGrid();
             
         }
+        //Jordon and Collin
         public void fillGameGrid()
         {
-
             for(int i = 0; i < Gameboard.Rows; i++)
             {
                 for(int j = 0; j < Gameboard.Columns; j++)
@@ -41,6 +41,18 @@ namespace PenteApplication
                     filler.Background = Brushes.DarkGoldenrod;
                     filler.BorderThickness = new Thickness(.75);
                     Gameboard.Children.Add(filler);
+                }
+            }
+
+            for (int i = 0; i < Gameboard.Rows + 1; i++)
+            {
+                for (int j = 0; j < Gameboard.Columns + 1; j++)
+                {
+                    Button intersection = new Button();
+                    intersection.Opacity = .5;
+                    intersection.Height = GameWindow.Height * .04;
+                    intersection.Width = GameWindow.Height * .04;
+                    GameButtons.Children.Add(intersection);
                 }
             }
 
