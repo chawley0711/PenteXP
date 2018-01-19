@@ -77,21 +77,26 @@ namespace PenteApplication
         //Austin and Jarrett
         public void Player1SubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            Player1Name = Player1NameTextBox.Text;
-            if (Player1Name.Equals(""))
+            string tempName = Player1NameTextBox.Text;
+            if (tempName.Equals(""))
             {
                 Player1Name = "Player 1";
             }
-            lblP1Captures.Content = Player1Name + "'s captures:";
-                NamePlayer1.Visibility = Visibility.Hidden;
-            if (pvp)
-            {
-                NamePlayer2.Visibility = Visibility.Visible;
-            }
             else
             {
-                PlayGame.Visibility = Visibility.Visible;
+            Player1Name = tempName;
             }
+            Player1Naming(Player1Name);
+            //lblP1Captures.Content = Player1Name + "'s captures:";
+            //    NamePlayer1.Visibility = Visibility.Hidden;
+            //if (pvp)
+            //{
+            //    NamePlayer2.Visibility = Visibility.Visible;
+            //}
+            //else
+            //{
+            //    PlayGame.Visibility = Visibility.Visible;
+            //}
         }
         //Austin and Jarrett
         public void Player2SubmitButton_Click(object sender, RoutedEventArgs e)
@@ -104,6 +109,19 @@ namespace PenteApplication
             lblP2Captures.Content = Player2Name + "'s captures:";
             NamePlayer2.Visibility = Visibility.Hidden;
             PlayGame.Visibility = Visibility.Visible;
+        }
+        public void Player1Naming(string playerName)
+        {
+            lblP1Captures.Content = playerName + "'s captures:";
+            NamePlayer1.Visibility = Visibility.Hidden;
+            if (pvp)
+            {
+                NamePlayer2.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                PlayGame.Visibility = Visibility.Visible;
+            }
         }
     }
 }
