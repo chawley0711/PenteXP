@@ -71,7 +71,7 @@ namespace PenteApplication
             MainMenu.Visibility = Visibility.Hidden;
             NamePlayer1.Visibility = Visibility.Visible;
             lblP2Captures.Content = CpuName + "'s captures:";
-            lblP2Announcement.Content = CpuName + ":";
+            
         }
         //Austin and Jarrett
         private void Player1SubmitButton_Click(object sender, RoutedEventArgs e)
@@ -82,7 +82,6 @@ namespace PenteApplication
                 Player1Name = "Player 1";
             }
             lblP1Captures.Content = Player1Name + "'s captures:";
-            lblP1Announcement.Content = Player1Name + ":";
                 NamePlayer1.Visibility = Visibility.Hidden;
             if (pvp)
             {
@@ -102,7 +101,6 @@ namespace PenteApplication
                 Player2Name = "Player 2";
             }
             lblP2Captures.Content = Player2Name + "'s captures:";
-            lblP2Announcement.Content = Player2Name + ":"; 
             NamePlayer2.Visibility = Visibility.Hidden;
             PlayGame.Visibility = Visibility.Visible;
         }
