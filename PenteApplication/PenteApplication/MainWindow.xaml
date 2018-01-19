@@ -10,7 +10,7 @@
 
     <Grid x:Name="Main" Background="#87adde">
         <Grid x:Name="PlayGame"
-              Visibility="Visible">
+              Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="2*" />
@@ -70,7 +70,7 @@
             </StackPanel>
         </Grid>
         <Grid x:Name="MainMenu"
-              Visibility="Hidden">
+              Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40*"/>
                 <RowDefinition Height="30*"/>
