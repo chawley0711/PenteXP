@@ -20,6 +20,9 @@ namespace PenteApplication
     /// </summary>
     public partial class MainWindow : Window
     {
+        public string Player1Name;
+        public string Player2Name;
+        public bool pvp;
         public MainWindow()
         {
             InitializeComponent();
@@ -41,15 +44,41 @@ namespace PenteApplication
             }
 
         }
-
+        //Austin and Jarrett
         private void PvPButton_Click(object sender, RoutedEventArgs e)
         {
-
+            pvp = true;
+            MainMenu.Visibility = Visibility.Hidden;
+            NamePlayer1.Visibility = Visibility.Visible;
         }
-
+        //Austin and Jarrett
         private void PvCButton_Click(object sender, RoutedEventArgs e)
         {
-
+            MainMenu.Visibility = Visibility.Hidden;
+            NamePlayer1.Visibility = Visibility.Visible;
+        }
+        //Austin and Jarrett
+        private void Player1SubmitButton_Click(object sender, RoutedEventArgs e)
+        {
+            Player1Name = Player1NameTextBox.Text;
+            lblP1Announcement.Content = Player1Name + "'s captures:";
+                NamePlayer1.Visibility = Visibility.Hidden;
+            if (pvp)
+            {
+                NamePlayer2.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                PlayGame.Visibility = Visibility.Visible;
+            }
+        }
+        //Austin and Jarrett
+        private void Player2SubmitButton_Click(object sender, RoutedEventArgs e)
+        {
+            Player2Name = Player2NameTextBox.Text;
+            lblP2Announcement.Content = Player2Name + "'s captures:";
+            NamePlayer2.Visibility = Visibility.Hidden;
+            PlayGame.Visibility = Visibility.Visible;
         }
     }
 }
