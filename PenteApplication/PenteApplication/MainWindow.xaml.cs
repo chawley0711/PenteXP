@@ -64,6 +64,10 @@ namespace PenteApplication
         private void Player1SubmitButton_Click(object sender, RoutedEventArgs e)
         {
             Player1Name = Player1NameTextBox.Text;
+            if (Player1Name.Equals(""))
+            {
+                Player1Name = "Player 1";
+            }
             lblP1Captures.Content = Player1Name + "'s captures:";
             lblP1Announcement.Content = Player1Name + ":";
                 NamePlayer1.Visibility = Visibility.Hidden;
@@ -80,6 +84,10 @@ namespace PenteApplication
         private void Player2SubmitButton_Click(object sender, RoutedEventArgs e)
         {
             Player2Name = Player2NameTextBox.Text;
+            if (Player2Name.Equals(""))
+            {
+                Player2Name = "Player 2";
+            }
             lblP2Captures.Content = Player2Name + "'s captures:";
             lblP2Announcement.Content = Player2Name + ":"; 
             NamePlayer2.Visibility = Visibility.Hidden;
