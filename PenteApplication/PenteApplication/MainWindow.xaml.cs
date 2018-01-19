@@ -24,7 +24,7 @@ namespace PenteApplication
         public string Player2Name;
         public bool pvp;
         public string CpuName = "GOD";
-        public Intersection[][] gameIntersections;
+        public List<Intersection> gameIntersections;
         public MainWindow()
         {
             InitializeComponent();
@@ -34,6 +34,7 @@ namespace PenteApplication
         //Jordon and Collin
         public void fillGameGrid()
         {
+            gameIntersections = new List<Intersection>();
             for(int i = 0; i < Gameboard.Rows; i++)
             {
                 for(int j = 0; j < Gameboard.Columns; j++)
@@ -50,10 +51,17 @@ namespace PenteApplication
                 for (int j = 0; j < Gameboard.Columns + 1; j++)
                 {
                     Button intersection = new Button();
+                    Intersection inter = new Intersection();
                     intersection.Opacity = .5;
                     intersection.Height = GameWindow.Height * .04;
                     intersection.Width = GameWindow.Height * .04;
-                    Binding b = new Binding();
+                    Binding b = new Binding("IntersectionFill");
+                    b.Mode = BindingMode.OneWay;
+                    intersection.DataContext = inter;
+                    b.Converter = new ColorConverter();
+                    intersection.SetBinding(Button.BackgroundProperty, b);
+                    intersection.Click += ButtonClick;
+                    gameIntersections.Add(inter);
                     GameButtons.Children.Add(intersection);
                 }
             }
@@ -105,5 +113,14 @@ namespace PenteApplication
             NamePlayer2.Visibility = Visibility.Hidden;
             PlayGame.Visibility = Visibility.Visible;
         }
+        //Collin and Jordon
+        public void ButtonClick(object sender, RoutedEventArgs e)
+        {
+            var obj = (Button)sender;
+            Intersection i = (Intersection)obj.DataContext;
+            i.IntersectionFill = Fill.White;
+            int index = gameIntersections.IndexOf(i);
+            //doing math to find specific row and column index 
+        }
     }
-}
+} 

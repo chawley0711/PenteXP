@@ -9,6 +9,10 @@ namespace PenteApplication
     public class Intersection
     {
         public Fill IntersectionFill { get; set; }
+        public Intersection()
+        {
+            IntersectionFill = Fill.Empty;
+        }
     }
 
     public enum Fill
@@ -17,4 +21,5 @@ namespace PenteApplication
         White,
         Empty
     }
+    
 }

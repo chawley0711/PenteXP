@@ -7,8 +7,9 @@ namespace PenteUnitTest
     [TestClass]
     public class UnitTest1
     {
+        //Jordon and Collin
         [TestMethod]
-        public void PlayerNameChangeIfNull()
+        public void Player1NameChangeIfNull()
         {
             MainWindow mw = new MainWindow();
             mw.pvp = true;
@@ -17,7 +18,7 @@ namespace PenteUnitTest
             Assert.AreEqual("Player 1", mw.Player1Name);
         }
         [TestMethod]
-        public void PlayerNameChangeIfEmpty()
+        public void Player1NameChangeIfEmpty()
         {
             MainWindow mw = new MainWindow();
             mw.pvp = true;
@@ -26,7 +27,7 @@ namespace PenteUnitTest
             Assert.AreEqual("Player 1", mw.Player1Name);
         }
         [TestMethod]
-        public void PlayerNameChangeIfWhiteSpace()
+        public void Player1NameChangeIfWhiteSpace()
         {
             MainWindow mw = new MainWindow();
             mw.pvp = true;
@@ -35,7 +36,7 @@ namespace PenteUnitTest
             Assert.AreEqual("Player 1", mw.Player1Name);
         }
         [TestMethod]
-        public void PlayerNameChangeIfLetter()
+        public void Player1NameChangeIfLetter()
         {
             MainWindow mw = new MainWindow();
             mw.pvp = true;
@@ -44,13 +45,59 @@ namespace PenteUnitTest
             Assert.AreEqual("Player 1", mw.Player1Name);
         }
         [TestMethod]
-        public void PlayerNameChangeIfName()
+        public void Player1NameChangeIfName()
         {
             MainWindow mw = new MainWindow();
             mw.pvp = false;
             mw.Player1Name = "Derrick";
             mw.Player1SubmitButton_Click(new object(), null);
             Assert.AreEqual("Derrick", mw.Player1Name);
+        }
+
+        [TestMethod]
+        public void Player2NameChangeIfNull()
+        {
+            MainWindow mw = new MainWindow();
+            mw.pvp = true;
+            mw.Player2Name = null;
+            mw.Player2SubmitButton_Click(new object(), null);
+            Assert.AreEqual("Player 2", mw.Player2Name);
+        }
+        [TestMethod]
+        public void Player2NameChangeIfEmpty()
+        {
+            MainWindow mw = new MainWindow();
+            mw.pvp = true;
+            mw.Player2Name = "";
+            mw.Player2SubmitButton_Click(new object(), null);
+            Assert.AreEqual("Player 2", mw.Player2Name);
+        }
+        [TestMethod]
+        public void Player2NameChangeIfWhiteSpace()
+        {
+            MainWindow mw = new MainWindow();
+            mw.pvp = true;
+            mw.Player2Name = "        ";
+            mw.Player2SubmitButton_Click(new object(), null);
+            Assert.AreEqual("Player 2", mw.Player2Name);
+        }
+        [TestMethod]
+        public void Player2NameChangeIfLetter()
+        {
+            MainWindow mw = new MainWindow();
+            mw.pvp = true;
+            mw.Player2Name = "        ";
+            mw.Player2SubmitButton_Click(new object(), null);
+            Assert.AreEqual("Player 2", mw.Player2Name);
+        }
+        [TestMethod]
+        public void Player2NameChangeIfName()
+        {
+            MainWindow mw = new MainWindow();
+            mw.pvp = false;
+            mw.Player2Name = "Derrick";
+            mw.Player2SubmitButton_Click(new object(), null);
+            Assert.AreEqual("Derrick", mw.Player2Name);
         }
     }
 }
