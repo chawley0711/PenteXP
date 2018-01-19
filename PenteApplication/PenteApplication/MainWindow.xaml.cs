@@ -24,6 +24,7 @@ namespace PenteApplication
         public string Player2Name;
         public bool pvp;
         public string CpuName = "GOD";
+        public Intersection[][] gameIntersections;
         public MainWindow()
         {
             InitializeComponent();
@@ -52,21 +53,21 @@ namespace PenteApplication
                     intersection.Opacity = .5;
                     intersection.Height = GameWindow.Height * .04;
                     intersection.Width = GameWindow.Height * .04;
-
+                    Binding b = new Binding();
                     GameButtons.Children.Add(intersection);
                 }
             }
 
         }
         //Austin and Jarrett
-        private void PvPButton_Click(object sender, RoutedEventArgs e)
+        public void PvPButton_Click(object sender, RoutedEventArgs e)
         {
             pvp = true;
             MainMenu.Visibility = Visibility.Hidden;
             NamePlayer1.Visibility = Visibility.Visible;
         }
         //Austin and Jarrett
-        private void PvCButton_Click(object sender, RoutedEventArgs e)
+        public void PvCButton_Click(object sender, RoutedEventArgs e)
         {
             MainMenu.Visibility = Visibility.Hidden;
             NamePlayer1.Visibility = Visibility.Visible;
@@ -74,7 +75,7 @@ namespace PenteApplication
             lblP2Announcement.Content = CpuName + ":";
         }
         //Austin and Jarrett
-        private void Player1SubmitButton_Click(object sender, RoutedEventArgs e)
+        public void Player1SubmitButton_Click(object sender, RoutedEventArgs e)
         {
             Player1Name = Player1NameTextBox.Text;
             if (Player1Name.Equals(""))
@@ -94,7 +95,7 @@ namespace PenteApplication
             }
         }
         //Austin and Jarrett
-        private void Player2SubmitButton_Click(object sender, RoutedEventArgs e)
+        public void Player2SubmitButton_Click(object sender, RoutedEventArgs e)
         {
             Player2Name = Player2NameTextBox.Text;
             if (Player2Name.Equals(""))
