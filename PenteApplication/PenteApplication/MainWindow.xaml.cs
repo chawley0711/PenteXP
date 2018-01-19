@@ -52,6 +52,7 @@ namespace PenteApplication
                     intersection.Opacity = .5;
                     intersection.Height = GameWindow.Height * .04;
                     intersection.Width = GameWindow.Height * .04;
+
                     GameButtons.Children.Add(intersection);
                 }
             }
