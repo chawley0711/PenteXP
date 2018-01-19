@@ -10,7 +10,7 @@
 
     <Grid x:Name="Main" Background="#87adde">
         <Grid x:Name="PlayGame"
-              Visibility="Hidden">
+              Visibility="Visible">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="2*" />
@@ -20,20 +20,57 @@
             <!-- Background="BurlyWood"-->
             <Border BorderBrush="Black" BorderThickness="3" Width="3" Height="700" HorizontalAlignment="Right" Margin="0, 0, 0, 0"/>
             <StackPanel x:Name="GameInfo" Margin="5">
-
+                <Menu x:Name="GameMenu"
+                      Height="20">
+                </Menu>
+                <Label x:Name="Timer" Content="20.00" HorizontalAlignment="Center" FontSize="20"/>
                 <Label x:Name="lblPlayer" Content="Player Name" HorizontalAlignment="Center" />
 
                 <UniformGrid Columns="2" Margin="0, 15, 0, 0">
                     <Label x:Name="lblP1Captures" Content="P1 Captures: " />
                     <Label x:Name="lblP2Captures" Content="P2 Captures: " />
                 </UniformGrid>
-                <Label x:Name="lblP1Announcement" Content="p1" Margin="0, 15, 0, 0"/>
-                <Label x:Name="lblP2Announcement" Content="p2" Margin="0, 15, 0, 0"/>
-
+                <Label x:Name="AnnouncementPlayerLabel" 
+                       HorizontalAlignment="Center"
+                       HorizontalContentAlignment="Center"
+                       FontSize="36"
+                       Width="300"
+                       Visibility="Hidden">
+                </Label>
+                <Label x:Name="AnnouncementConstantLabel" 
+                       HorizontalAlignment="Center"
+                       HorizontalContentAlignment="Center"
+                       FontSize="36"
+                       Width="300"
+                       Visibility="Hidden">
+                    Has A
+                </Label>
+                <Label x:Name="AnnouncementTypeLabel" 
+                       HorizontalAlignment="Center"
+                       HorizontalContentAlignment="Center"
+                       FontSize="36"
+                       Width="300"
+                       Visibility="Hidden">
+                </Label>
+                <Label x:Name="WinnerPlayerLabel" 
+                       HorizontalAlignment="Center"
+                       HorizontalContentAlignment="Center"
+                       FontSize="48"
+                       Width="300"
+                       Visibility="Hidden">
+                </Label>
+                <Label x:Name="WinnerConstantLabel" 
+                       HorizontalAlignment="Center"
+                       HorizontalContentAlignment="Center"
+                       FontSize="48"
+                       Width="300"
+                       Visibility="Hidden">
+                    Has Won!
+                </Label>
             </StackPanel>
         </Grid>
         <Grid x:Name="MainMenu"
-              Visibility="Visible">
+              Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40*"/>
                 <RowDefinition Height="30*"/>
