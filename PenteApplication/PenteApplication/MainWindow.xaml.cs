@@ -138,7 +138,8 @@ namespace PenteApplication
             Intersection i = (Intersection)obj.DataContext;
             i.IntersectionFill = Fill.White;
             int index = gameIntersections.IndexOf(i);
-            //doing math to find specific row and column index 
+            //int col = index % Gameboard.Columns;
+            //int row = (int)Math.Floor((decimal)(index/Gameboard.Columns));
         }
     }
 } 
