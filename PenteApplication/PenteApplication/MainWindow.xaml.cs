@@ -131,6 +131,7 @@ namespace PenteApplication
             lblP2Captures.Content = playerName + "'s captures:";
             NamePlayer.Visibility = Visibility.Hidden;
             PlayGame.Visibility = Visibility.Visible;
+            PlaceFirst();
         }
         //Austin and Jarrett
         public void Player1Naming(string playerName)
