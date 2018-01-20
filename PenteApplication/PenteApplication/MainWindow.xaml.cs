@@ -25,12 +25,24 @@ namespace PenteApplication
         public bool pvp;
         public string CpuName = "GOD";
         public List<Intersection> gameIntersections;
+        public bool P1Turn = false;
         public MainWindow()
         {
             InitializeComponent();
             fillGameGrid();
-            
         }
+
+        //Jordon and Collin
+        public void PlaceFirst()
+        {
+            int index = (GameButtons.Rows * GameButtons.Columns) / 2;
+            gameIntersections[index].IntersectionFill = Fill.Black;
+            Button b = (Button)GameButtons.Children[index];
+            b.Opacity = 1;
+            b.Style = (Style)Application.Current.Resources["MyButtonStyle"];
+            b.IsEnabled = false;
+        }
+
         //Jordon and Collin
         public void fillGameGrid()
         {
@@ -52,7 +64,7 @@ namespace PenteApplication
                 {
                     Button intersection = new Button();
                     Intersection inter = new Intersection();
-                    intersection.Opacity = .5;
+                    intersection.Opacity = 0;
                     intersection.Height = GameWindow.Height * .04;
                     intersection.Width = GameWindow.Height * .04;
                     Binding b = new Binding("IntersectionFill");
@@ -65,7 +77,6 @@ namespace PenteApplication
                     GameButtons.Children.Add(intersection);
                 }
             }
-
         }
         //Austin and Jarrett
         public void PvPButton_Click(object sender, RoutedEventArgs e)
@@ -129,12 +140,23 @@ namespace PenteApplication
         //Collin and Jordon
         public void PlaceStone_Click(object sender, RoutedEventArgs e)
         {
-            var obj = (Button)sender;
-            Intersection i = (Intersection)obj.DataContext;
-            i.IntersectionFill = Fill.White;
-            int index = gameIntersections.IndexOf(i);
+            Button b = (Button)sender;
+            b.Opacity = 1;
+            b.Style = (Style)Application.Current.Resources["MyButtonStyle"];
+            b.IsEnabled = false;
+            Intersection i = (Intersection)b.DataContext;
+            if(!P1Turn)
+            {
+                i.IntersectionFill = Fill.White;
+            }
+            else
+            {
+                i.IntersectionFill = Fill.Black;
+            }
+            //int index = gameIntersections.IndexOf(i);
             //int col = index % Gameboard.Columns;
             //int row = (int)Math.Floor((decimal)(index/Gameboard.Columns));
+            P1Turn = !P1Turn;
         }
     }
 } 

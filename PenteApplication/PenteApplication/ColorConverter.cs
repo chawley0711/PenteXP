@@ -19,11 +19,11 @@ namespace PenteApplication
             Fill f = (Fill)value;
             if(f == Fill.White)
             {
-                ib.ImageSource = new BitmapImage(new Uri("@../white.png", UriKind.Relative));
+                ib.ImageSource = new BitmapImage(new Uri("@../../../../white.png", UriKind.Relative));
             }
             if (f == Fill.Black)
             {
-                ib.ImageSource = new BitmapImage(new Uri("@../black.png", UriKind.Relative));
+                ib.ImageSource = new BitmapImage(new Uri("@../../../../black.png", UriKind.Relative));
             }
             if (f == Fill.Empty)
             {

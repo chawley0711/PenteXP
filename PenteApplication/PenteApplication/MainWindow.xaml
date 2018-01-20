@@ -25,7 +25,7 @@
                 </Menu>
                 <Label x:Name="Timer" Content="20.00" HorizontalAlignment="Center" FontSize="20"/>
                 <Label x:Name="lblPlayer" Content="Player Name" HorizontalAlignment="Center" />
-
+                
                 <UniformGrid Columns="2" Margin="0, 15, 0, 0">
                     <Label x:Name="lblP1Captures" Content="P1 Captures: " />
                     <Label x:Name="lblP2Captures" Content="P2 Captures: " />
