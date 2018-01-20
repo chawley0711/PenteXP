@@ -60,7 +60,7 @@ namespace PenteApplication
                     intersection.DataContext = inter;
                     b.Converter = new ColorConverter();
                     intersection.SetBinding(Button.BackgroundProperty, b);
-                    intersection.Click += ButtonClick;
+                    intersection.Click += PlaceStone_Click;
                     gameIntersections.Add(inter);
                     GameButtons.Children.Add(intersection);
                 }
@@ -118,6 +118,7 @@ namespace PenteApplication
             NamePlayer2.Visibility = Visibility.Hidden;
             PlayGame.Visibility = Visibility.Visible;
         }
+        //Austin and Jarrett
         public void Player1Naming(string playerName)
         {
             lblP1Captures.Content = playerName + "'s captures:";
@@ -132,7 +133,7 @@ namespace PenteApplication
             }
         }
         //Collin and Jordon
-        public void ButtonClick(object sender, RoutedEventArgs e)
+        public void PlaceStone_Click(object sender, RoutedEventArgs e)
         {
             var obj = (Button)sender;
             Intersection i = (Intersection)obj.DataContext;
