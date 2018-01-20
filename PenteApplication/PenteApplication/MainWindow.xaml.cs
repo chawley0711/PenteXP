@@ -78,6 +78,7 @@ namespace PenteApplication
         public void PvCButton_Click(object sender, RoutedEventArgs e)
         {
             MainMenu.Visibility = Visibility.Hidden;
+            Player2Entry.Visibility = Visibility.Hidden;
             NamePlayer.Visibility = Visibility.Visible;
             lblP2Captures.Content = CpuName + "'s captures:";
             
@@ -85,44 +86,45 @@ namespace PenteApplication
         //Austin and Jarrett
         public void PlayerSubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            string tempName = Player1NameTextBox.Text;
-            if (tempName.Equals(""))
+            string tempName1 = Player1NameTextBox.Text;
+            if (tempName1.Equals(""))
             {
                 Player1Name = "Player 1";
             }
             else
             {
-            Player1Name = tempName;
+                Player1Name = tempName1;
             }
             Player1Naming(Player1Name);
-            //lblP1Captures.Content = Player1Name + "'s captures:";
-            //    NamePlayer1.Visibility = Visibility.Hidden;
-            //if (pvp)
-            //{
-            //    NamePlayer2.Visibility = Visibility.Visible;
-            //}
-            //else
-            //{
-            //    PlayGame.Visibility = Visibility.Visible;
-            //}
+            if(pvp)
+            {
+                string tempName2 = Player2NameTextBox.Text;
+                if (tempName2.Equals(""))
+                {
+                    Player2Name = "Player 2";
+                }
+                else
+                {
+                    Player2Name = tempName2;
+                }
+            }
+            else
+            {
+                Player2Name = CpuName;
+            }
+                Player2Naming(Player2Name);
         }
         //Austin and Jarrett
-        //public void Player2SubmitButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    Player2Name = Player2NameTextBox.Text;
-        //    if (Player2Name.Equals(""))
-        //    {
-        //        Player2Name = "Player 2";
-        //    }
-        //    lblP2Captures.Content = Player2Name + "'s captures:";
-        //    PlayGame.Visibility = Visibility.Visible;
-        //}
+        public void Player2Naming(string playerName)
+        {
+            lblP2Captures.Content = playerName + "'s captures:";
+            NamePlayer.Visibility = Visibility.Hidden;
+            PlayGame.Visibility = Visibility.Visible;
+        }
         //Austin and Jarrett
         public void Player1Naming(string playerName)
         {
             lblP1Captures.Content = playerName + "'s captures:";
-            NamePlayer.Visibility = Visibility.Hidden;
-            PlayGame.Visibility = Visibility.Visible;
         }
         //Collin and Jordon
         public void PlaceStone_Click(object sender, RoutedEventArgs e)
