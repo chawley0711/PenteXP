@@ -70,7 +70,7 @@
             </StackPanel>
         </Grid>
         <Grid x:Name="MainMenu"
-              Visibility="Hidden">
+              Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40*"/>
                 <RowDefinition Height="30*"/>
@@ -108,7 +108,7 @@
         </Grid>
 
         <Grid x:Name="NamePlayer"
-              Visibility="Visible">
+              Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50*" />
                 <RowDefinition Height="50*" />
