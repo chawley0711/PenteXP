@@ -90,44 +90,35 @@ namespace PenteApplication
         {
             MainMenu.Visibility = Visibility.Hidden;
             Player2Entry.Visibility = Visibility.Hidden;
-            NamePlayer.Visibility = Visibility.Visible;
-            lblP2Captures.Content = CpuName + "'s captures:";
-            
+            NamePlayer.Visibility = Visibility.Visible;            
         }
         //Austin and Jarrett
         public void PlayerSubmitButton_Click(object sender, RoutedEventArgs e)
         {
             string tempName1 = Player1NameTextBox.Text;
-            if (tempName1.Equals(""))
-            {
-                Player1Name = "Player 1";
-            }
-            else
-            {
-                Player1Name = tempName1;
-            }
-            Player1Naming(Player1Name);
+            Player1Naming(tempName1);
             if(pvp)
             {
                 string tempName2 = Player2NameTextBox.Text;
-                if (tempName2.Equals(""))
-                {
-                    Player2Name = "Player 2";
-                }
-                else
-                {
-                    Player2Name = tempName2;
-                }
+                Player2Naming(tempName2);
             }
             else
             {
                 Player2Name = CpuName;
-            }
                 Player2Naming(Player2Name);
+            }
         }
         //Austin and Jarrett
         public void Player2Naming(string playerName)
         {
+            if (playerName.Equals(""))
+            {
+                Player2Name = "Player 2";
+            }
+            else
+            {
+                Player2Name = playerName;
+            }
             lblP2Captures.Content = playerName + "'s captures:";
             NamePlayer.Visibility = Visibility.Hidden;
             PlayGame.Visibility = Visibility.Visible;
@@ -136,6 +127,14 @@ namespace PenteApplication
         //Austin and Jarrett
         public void Player1Naming(string playerName)
         {
+            if (playerName.Equals(""))
+            {
+                Player1Name = "Player 1";
+            }
+            else
+            {
+                Player1Name = playerName;
+            }
             lblP1Captures.Content = playerName + "'s captures:";
         }
         //Collin and Jordon
