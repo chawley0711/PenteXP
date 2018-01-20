@@ -70,7 +70,7 @@
             </StackPanel>
         </Grid>
         <Grid x:Name="MainMenu"
-              Visibility="Visible">
+              Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40*"/>
                 <RowDefinition Height="30*"/>
@@ -106,9 +106,12 @@
                 Player VS Computer
             </Button>
         </Grid>
-        <Grid x:Name="NamePlayer1"
-              Visibility="Hidden">
+
+        <Grid x:Name="NamePlayer"
+              Visibility="Visible">
             <Grid.RowDefinitions>
+                <RowDefinition Height="50*" />
+                <RowDefinition Height="50*" />
                 <RowDefinition Height="50*" />
                 <RowDefinition Height="50*" />
             </Grid.RowDefinitions>
@@ -138,26 +141,8 @@
                          VerticalContentAlignment="Center">
                 </TextBox>
             </Grid>
-            <Button x:Name="Player1SubmitButton"
-                    Grid.Row="1"
-                    Height="75"
-                    Width="250"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Top"
-                    Margin="0 40 0 0 "
-                    FontSize="40"
-                    Click="Player1SubmitButton_Click">
-                Submit
-            </Button>
-        </Grid>
-        <Grid x:Name="NamePlayer2"
-              Visibility="Hidden">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50*" />
-                <RowDefinition Height="50*" />
-            </Grid.RowDefinitions>
             <Grid x:Name="Player2Entry"
-                  Grid.Row="0">
+                  Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50*"/>
                     <ColumnDefinition Width="50*"/>
@@ -182,15 +167,63 @@
                          VerticalContentAlignment="Center">
                 </TextBox>
             </Grid>
-            <Button x:Name="Player2SubmitButton"
-                    Grid.Row="1"
+            <Grid x:Name="SliderGrid"
+                  Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70*"/>
+                    <ColumnDefinition Width="30*"/>
+                </Grid.ColumnDefinitions>
+                <Slider x:Name="BoardSizeSlider"
+                        Maximum="39"
+                        Minimum="9"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Width="500"
+                        Margin="0 0 20 0" 
+                        TickFrequency="2"
+                        IsSnapToTickEnabled="True"/>
+                <Label x:Name="BoardSize1"
+                       Grid.Column="1"
+                       FontSize="24"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       Margin="15 0 5 0"
+                       Width="50"
+                       Height="50"
+                       VerticalContentAlignment="Center"
+                       HorizontalContentAlignment="Left"
+                       Content="{Binding ElementName=BoardSizeSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+                <Label x:Name="BoardSize"
+                       Grid.Column="1"
+                       FontSize="24" 
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       Margin="45 0 5 0"
+                       Width="50"
+                       Height="50"
+                       VerticalContentAlignment="Center"
+                       HorizontalContentAlignment="Left">X</Label>
+                <Label x:Name="BoardSize2"
+                       Grid.Column="1"
+                       FontSize="24" 
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       Margin="70 0 5 0"
+                       Width="50"
+                       Height="50"
+                       VerticalContentAlignment="Center"
+                       HorizontalContentAlignment="Left"
+                       Content="{Binding ElementName=BoardSizeSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+            </Grid>
+            <Button x:Name="PlayerSubmitButton"
+                    Grid.Row="3"
                     Height="75"
                     Width="250"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top"
                     Margin="0 40 0 0 "
                     FontSize="40"
-                    Click="Player2SubmitButton_Click">
+                    Click="PlayerSubmitButton_Click">
                 Submit
             </Button>
         </Grid>

@@ -14,7 +14,7 @@ namespace PenteUnitTest
             MainWindow mw = new MainWindow();
             mw.pvp = true;
             mw.Player1Name = null;
-            mw.Player1SubmitButton_Click(new object(), null);
+            mw.PlayerSubmitButton_Click(new object(), null);
             Assert.AreEqual("Player 1", mw.Player1Name);
         }
         [TestMethod]
@@ -23,7 +23,7 @@ namespace PenteUnitTest
             MainWindow mw = new MainWindow();
             mw.pvp = true;
             mw.Player1Name = "";
-            mw.Player1SubmitButton_Click(new object(), null);
+            mw.PlayerSubmitButton_Click(new object(), null);
             Assert.AreEqual("Player 1", mw.Player1Name);
         }
         [TestMethod]
@@ -32,7 +32,7 @@ namespace PenteUnitTest
             MainWindow mw = new MainWindow();
             mw.pvp = true;
             mw.Player1Name = "        ";
-            mw.Player1SubmitButton_Click(new object(), null);
+            mw.PlayerSubmitButton_Click(new object(), null);
             Assert.AreEqual("Player 1", mw.Player1Name);
         }
         [TestMethod]
@@ -41,7 +41,7 @@ namespace PenteUnitTest
             MainWindow mw = new MainWindow();
             mw.pvp = true;
             mw.Player1Name = "        ";
-            mw.Player1SubmitButton_Click(new object(), null);
+            mw.PlayerSubmitButton_Click(new object(), null);
             Assert.AreEqual("Player 1", mw.Player1Name);
         }
         [TestMethod]
@@ -50,7 +50,7 @@ namespace PenteUnitTest
             MainWindow mw = new MainWindow();
             mw.pvp = false;
             mw.Player1Name = "Derrick";
-            mw.Player1SubmitButton_Click(new object(), null);
+            mw.PlayerSubmitButton_Click(new object(), null);
             Assert.AreEqual("Derrick", mw.Player1Name);
         }
 
@@ -60,7 +60,7 @@ namespace PenteUnitTest
             MainWindow mw = new MainWindow();
             mw.pvp = true;
             mw.Player2Name = null;
-            mw.Player2SubmitButton_Click(new object(), null);
+            mw.PlayerSubmitButton_Click(new object(), null);
             Assert.AreEqual("Player 2", mw.Player2Name);
         }
         [TestMethod]
@@ -69,7 +69,7 @@ namespace PenteUnitTest
             MainWindow mw = new MainWindow();
             mw.pvp = true;
             mw.Player2Name = "";
-            mw.Player2SubmitButton_Click(new object(), null);
+            mw.PlayerSubmitButton_Click(new object(), null);
             Assert.AreEqual("Player 2", mw.Player2Name);
         }
         [TestMethod]
@@ -78,7 +78,7 @@ namespace PenteUnitTest
             MainWindow mw = new MainWindow();
             mw.pvp = true;
             mw.Player2Name = "        ";
-            mw.Player2SubmitButton_Click(new object(), null);
+            mw.PlayerSubmitButton_Click(new object(), null);
             Assert.AreEqual("Player 2", mw.Player2Name);
         }
         [TestMethod]
@@ -87,7 +87,7 @@ namespace PenteUnitTest
             MainWindow mw = new MainWindow();
             mw.pvp = true;
             mw.Player2Name = "        ";
-            mw.Player2SubmitButton_Click(new object(), null);
+            mw.PlayerSubmitButton_Click(new object(), null);
             Assert.AreEqual("Player 2", mw.Player2Name);
         }
         [TestMethod]
@@ -96,7 +96,7 @@ namespace PenteUnitTest
             MainWindow mw = new MainWindow();
             mw.pvp = false;
             mw.Player2Name = "Derrick";
-            mw.Player2SubmitButton_Click(new object(), null);
+            mw.PlayerSubmitButton_Click(new object(), null);
             Assert.AreEqual("Derrick", mw.Player2Name);
         }
     }

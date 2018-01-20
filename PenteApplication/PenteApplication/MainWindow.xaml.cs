@@ -72,18 +72,18 @@ namespace PenteApplication
         {
             pvp = true;
             MainMenu.Visibility = Visibility.Hidden;
-            NamePlayer1.Visibility = Visibility.Visible;
+            NamePlayer.Visibility = Visibility.Visible;
         }
         //Austin and Jarrett
         public void PvCButton_Click(object sender, RoutedEventArgs e)
         {
             MainMenu.Visibility = Visibility.Hidden;
-            NamePlayer1.Visibility = Visibility.Visible;
+            NamePlayer.Visibility = Visibility.Visible;
             lblP2Captures.Content = CpuName + "'s captures:";
             
         }
         //Austin and Jarrett
-        public void Player1SubmitButton_Click(object sender, RoutedEventArgs e)
+        public void PlayerSubmitButton_Click(object sender, RoutedEventArgs e)
         {
             string tempName = Player1NameTextBox.Text;
             if (tempName.Equals(""))
@@ -107,30 +107,22 @@ namespace PenteApplication
             //}
         }
         //Austin and Jarrett
-        public void Player2SubmitButton_Click(object sender, RoutedEventArgs e)
-        {
-            Player2Name = Player2NameTextBox.Text;
-            if (Player2Name.Equals(""))
-            {
-                Player2Name = "Player 2";
-            }
-            lblP2Captures.Content = Player2Name + "'s captures:";
-            NamePlayer2.Visibility = Visibility.Hidden;
-            PlayGame.Visibility = Visibility.Visible;
-        }
+        //public void Player2SubmitButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    Player2Name = Player2NameTextBox.Text;
+        //    if (Player2Name.Equals(""))
+        //    {
+        //        Player2Name = "Player 2";
+        //    }
+        //    lblP2Captures.Content = Player2Name + "'s captures:";
+        //    PlayGame.Visibility = Visibility.Visible;
+        //}
         //Austin and Jarrett
         public void Player1Naming(string playerName)
         {
             lblP1Captures.Content = playerName + "'s captures:";
-            NamePlayer1.Visibility = Visibility.Hidden;
-            if (pvp)
-            {
-                NamePlayer2.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                PlayGame.Visibility = Visibility.Visible;
-            }
+            NamePlayer.Visibility = Visibility.Hidden;
+            PlayGame.Visibility = Visibility.Visible;
         }
         //Collin and Jordon
         public void PlaceStone_Click(object sender, RoutedEventArgs e)
