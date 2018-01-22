@@ -29,7 +29,6 @@ namespace PenteApplication
         public MainWindow()
         {
             InitializeComponent();
-            fillGameGrid();
         }
 
         //Jordon and Collin
@@ -46,9 +45,13 @@ namespace PenteApplication
         public void fillGameGrid()
         {
             gameIntersections = new List<Intersection>();
-            for(int i = 0; i < Gameboard.Rows; i++)
+            Gameboard.Rows = (int)BoardSizeSlider.Value;
+            Gameboard.Columns = (int)BoardSizeSlider.Value;
+            GameButtons.Rows = (int)BoardSizeSlider.Value;
+            GameButtons.Columns = (int)BoardSizeSlider.Value;
+            for (int i = 0; i < BoardSizeSlider.Value; i++)
             {
-                for(int j = 0; j < Gameboard.Columns; j++)
+                for(int j = 0; j < BoardSizeSlider.Value; j++)
                 {
                     Label filler = new Label();
                     filler.Background = Brushes.DarkGoldenrod;
@@ -57,9 +60,9 @@ namespace PenteApplication
                 }
             }
 
-            for (int i = 0; i < Gameboard.Rows + 1; i++)
+            for (int i = 0; i < BoardSizeSlider.Value + 1; i++)
             {
-                for (int j = 0; j < Gameboard.Columns + 1; j++)
+                for (int j = 0; j < BoardSizeSlider.Value + 1; j++)
                 {
                     Button intersection = new Button();
                     Intersection inter = new Intersection();
@@ -94,6 +97,7 @@ namespace PenteApplication
         //Austin and Jarrett
         public void PlayerSubmitButton_Click(object sender, RoutedEventArgs e)
         {
+            fillGameGrid();
             string tempName1 = Player1NameTextBox.Text;
             Player1Naming(tempName1);
             if(pvp)
