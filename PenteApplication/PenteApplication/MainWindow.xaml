@@ -7,10 +7,17 @@
         x:Name="GameWindow"
         mc:Ignorable="d"
         Title="Pente" Height="700" Width="1050">
-
+    <Window.CommandBindings>
+        <CommandBinding Command="Save"
+                        Executed="Save_Click"/>
+        <CommandBinding Command="SaveAs"
+                        Executed="SaveAs_Click"/>
+        <CommandBinding Command="Open"
+                        Executed="Open_Click"/>
+    </Window.CommandBindings>
     <Grid x:Name="Main" Background="#87adde">
         <Grid x:Name="PlayGame"
-              Visibility="Hidden">
+              Visibility="Visible">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="2*" />
@@ -20,7 +27,21 @@
             <Border BorderBrush="Black" BorderThickness="3" Width="3" Height="700" HorizontalAlignment="Right" Margin="0, 0, 0, 0"/>
             <StackPanel x:Name="GameInfo" Margin="5">
                 <Menu x:Name="GameMenu"
-                      Height="20">
+                    Height="30"
+                    VerticalAlignment="Top"
+                    Background="LightGray">
+                    <MenuItem Header="_File"
+                      FontSize="18">
+                        <MenuItem Header="_Save"
+                          Command="Save">
+                        </MenuItem>
+                        <MenuItem Header="Save_As"
+                          Command="SaveAs">
+                        </MenuItem>
+                        <MenuItem Header="_Open"
+                          Command="Open">
+                        </MenuItem>
+                    </MenuItem>
                 </Menu>
                 <Label x:Name="lblTimer" Content="20" HorizontalAlignment="Center" FontSize="20"/>
                 <Label x:Name="lblPlayer" Content="Player Name" HorizontalAlignment="Center" />
@@ -69,7 +90,7 @@
             </StackPanel>
         </Grid>
         <Grid x:Name="MainMenu"
-              Visibility="Visible">
+              Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40*"/>
                 <RowDefinition Height="30*"/>
