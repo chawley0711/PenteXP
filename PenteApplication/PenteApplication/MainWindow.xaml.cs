@@ -84,7 +84,7 @@ namespace PenteApplication
             lblTimer.Content = timerSec.ToString();
         }
         //Jordon and Collin
-        public int fillGameGrid(int size)
+        public int FillGameGrid(int size)
         {
             gameIntersections = new List<Intersection>();
             Gameboard.Rows = size;
@@ -144,7 +144,7 @@ namespace PenteApplication
         //Austin and Jarrett
         public void PlayerSubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            fillGameGrid((int)BoardSizeSlider.Value - 1);
+            FillGameGrid((int)BoardSizeSlider.Value - 1);
             string tempName1 = Player1NameTextBox.Text;
             Player1Naming(tempName1);
             if(pvp)
