@@ -88,5 +88,38 @@ namespace PenteUnitTest
             mw.Player2Naming("Derrick");
             Assert.AreEqual("Derrick", mw.Player2Name);
         }
+
+        //Austin and Jarrett
+        [TestMethod]
+        public void Draw8x8Board()
+        {
+            MainWindow mw = new MainWindow();
+            int size = mw.FillGameGrid(8);
+            Assert.AreEqual(8, size);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void Draw38x38Board()
+        {
+            MainWindow mw = new MainWindow();
+            int size = mw.FillGameGrid(38);
+            Assert.AreEqual(38, size);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void Draw16x16Board()
+        {
+            MainWindow mw = new MainWindow();
+            int size = mw.FillGameGrid(16);
+            Assert.AreEqual(16, size);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void Draw24x24Board()
+        {
+            MainWindow mw = new MainWindow();
+            int size = mw.FillGameGrid(24);
+            Assert.AreEqual(24, size);
+        }
     }
 }

@@ -42,16 +42,16 @@ namespace PenteApplication
         }
 
         //Jordon and Collin
-        public void fillGameGrid()
+        public int FillGameGrid(int size)
         {
             gameIntersections = new List<Intersection>();
-            Gameboard.Rows = (int)BoardSizeSlider.Value;
-            Gameboard.Columns = (int)BoardSizeSlider.Value;
-            GameButtons.Rows = (int)BoardSizeSlider.Value;
-            GameButtons.Columns = (int)BoardSizeSlider.Value;
-            for (int i = 0; i < BoardSizeSlider.Value; i++)
+            Gameboard.Rows = size;
+            Gameboard.Columns = size;
+            GameButtons.Rows = size;
+            GameButtons.Columns = size;
+            for (int i = 0; i < size; i++)
             {
-                for(int j = 0; j < BoardSizeSlider.Value; j++)
+                for(int j = 0; j < size; j++)
                 {
                     Label filler = new Label();
                     filler.Background = Brushes.DarkGoldenrod;
@@ -60,15 +60,15 @@ namespace PenteApplication
                 }
             }
 
-            for (int i = 0; i < BoardSizeSlider.Value + 1; i++)
+            for (int i = 0; i < size + 1; i++)
             {
-                for (int j = 0; j < BoardSizeSlider.Value + 1; j++)
+                for (int j = 0; j < size + 1; j++)
                 {
                     Button intersection = new Button();
                     Intersection inter = new Intersection();
                     intersection.Opacity = 0;
-                    intersection.Height = GameWindow.Height * .04;
-                    intersection.Width = GameWindow.Height * .04;
+                    intersection.Height = size * .04;
+                    intersection.Width = size * .04;
                     Binding b = new Binding("IntersectionFill");
                     b.Mode = BindingMode.OneWay;
                     intersection.DataContext = inter;
@@ -79,6 +79,8 @@ namespace PenteApplication
                     GameButtons.Children.Add(intersection);
                 }
             }
+
+            return Gameboard.Columns;
         }
         //Austin and Jarrett
         public void PvPButton_Click(object sender, RoutedEventArgs e)
@@ -97,7 +99,7 @@ namespace PenteApplication
         //Austin and Jarrett
         public void PlayerSubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            fillGameGrid();
+            FillGameGrid((int)BoardSizeSlider.Value - 1);
             string tempName1 = Player1NameTextBox.Text;
             Player1Naming(tempName1);
             if(pvp)
