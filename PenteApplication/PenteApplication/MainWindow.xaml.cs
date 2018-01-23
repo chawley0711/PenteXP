@@ -45,11 +45,11 @@ namespace PenteApplication
         public int FillGameGrid(int size)
         {
             gameIntersections = new List<Intersection>();
-            Gameboard.Rows = size;
-            Gameboard.Columns = size;
-            GameButtons.Rows = size;
-            GameButtons.Columns = size;
-            for (int i = 0; i < size; i++)
+            Gameboard.Rows = (int)BoardSizeSlider.Value - 1;
+            Gameboard.Columns = (int)BoardSizeSlider.Value - 1;
+            GameButtons.Rows = (int)BoardSizeSlider.Value;
+            GameButtons.Columns = (int)BoardSizeSlider.Value;
+            for (int i = 0; i < BoardSizeSlider.Value; i++)
             {
                 for(int j = 0; j < size; j++)
                 {
@@ -59,16 +59,20 @@ namespace PenteApplication
                     Gameboard.Children.Add(filler);
                 }
             }
+            GameButtons.Height = 700 - (BoardSizeSlider.Value * 1.5);
+            GameButtons.Width = 700 - (BoardSizeSlider.Value * 1.5);
 
-            for (int i = 0; i < size + 1; i++)
+            for (int i = 0; i < BoardSizeSlider.Value; i++)
             {
-                for (int j = 0; j < size + 1; j++)
+                for (int j = 0; j < BoardSizeSlider.Value; j++)
                 {
                     Button intersection = new Button();
                     Intersection inter = new Intersection();
-                    intersection.Opacity = 0;
-                    intersection.Height = size * .04;
-                    intersection.Width = size * .04;
+                    intersection.Opacity = 1;
+                    intersection.HorizontalContentAlignment = HorizontalAlignment.Stretch;
+                    intersection.VerticalContentAlignment = VerticalAlignment.Stretch;
+                    intersection.Height = Gameboard.Height * (((BoardSizeSlider.Value / 2) / 100));
+                    intersection.Width = Gameboard.Width * (((BoardSizeSlider.Value / 2) / 100));
                     Binding b = new Binding("IntersectionFill");
                     b.Mode = BindingMode.OneWay;
                     intersection.DataContext = inter;
