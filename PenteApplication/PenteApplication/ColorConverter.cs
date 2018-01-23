@@ -16,6 +16,7 @@ namespace PenteApplication
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             ImageBrush ib = new ImageBrush();
+            ib.Stretch = Stretch.Fill;
             Fill f = (Fill)value;
             if(f == Fill.White)
             {
@@ -38,3 +39,4 @@ namespace PenteApplication
         }
     }
 }
+;
