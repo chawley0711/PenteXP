@@ -22,7 +22,7 @@
                 <Menu x:Name="GameMenu"
                       Height="20">
                 </Menu>
-                <Label x:Name="Timer" Content="20.00" HorizontalAlignment="Center" FontSize="20"/>
+                <Label x:Name="lblTimer" Content="20" HorizontalAlignment="Center" FontSize="20"/>
                 <Label x:Name="lblPlayer" Content="Player Name" HorizontalAlignment="Center" />
                 
                 <UniformGrid Columns="2" Margin="0, 15, 0, 0">

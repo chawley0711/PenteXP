@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Timers;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -34,24 +35,54 @@ namespace PenteApplication
         public bool pvp;
         public string CpuName = "GOD";
         public List<Intersection> gameIntersections;
+        public List<List<Intersection>> gameIntersections2D;
+        public Timer turnTimer;
+        public int timerSec = 20;
+
         public List<List<int>> foundTria;
         public List<List<int>> foundTessera;
         public bool P1Turn = false;
         public MainWindow()
         {
             InitializeComponent();
+            turnTimer = new Timer();
+            turnTimer.BeginInit();
+            turnTimer.Interval = 1000;
+            turnTimer.Elapsed += timer_tick;
+            turnTimer.Enabled = true;
         }
 
         //Jordon and Collin
         public void PlaceFirst()
         {
             int index = (GameButtons.Rows * GameButtons.Columns) / 2;
+            int Rindex = GameButtons.Rows / 2;
+            int Cindex = GameButtons.Columns / 2;
+            //gameIntersections2D[Cindex][Rindex].IntersectionFill = Fill.Black;
             gameIntersections[index].IntersectionFill = Fill.Black;
             Button b = (Button)GameButtons.Children[index];
             b.Opacity = 1;
             b.Style = (Style)Application.Current.Resources["MyButtonStyle"];
+            lblPlayer.Content = Player2Name + "'s turn";
+            turnTimer.Start();
         }
-
+        public void timer_tick(object sender, ElapsedEventArgs e)
+        {
+            timerSec--;
+            if(timerSec == 0)
+            {
+                P1Turn = !P1Turn;
+                if (P1Turn)
+                {
+                    lblPlayer.Content = Player1Name + "'s turn";
+                }
+                else
+                {
+                    lblPlayer.Content = Player2Name + "'s turn";
+                }
+            }
+            lblTimer.Content = timerSec.ToString();
+        }
         //Jordon and Collin
         public int fillGameGrid(int size)
         {
@@ -89,8 +120,10 @@ namespace PenteApplication
                     intersection.SetBinding(Button.BackgroundProperty, b);
                     intersection.Click += PlaceStone_Click;
                     gameIntersections.Add(inter);
+                    intersection.Content = j + ", " + i;
                     GameButtons.Children.Add(intersection);
                 }
+                
             }
             return Gameboard.Columns;
         }
@@ -180,11 +213,13 @@ namespace PenteApplication
                 {
                     CheckForTessera(Fill.White);
                     CheckForTria(Fill.White);
+                    lblPlayer.Content = Player1Name + "'s turn";
                 }
                 else
                 {
                     CheckForTessera(Fill.Black);
                     CheckForTria(Fill.Black);
+                    lblPlayer.Content = Player2Name + "'s turn";
                 }
                 P1Turn = !P1Turn;
             }
