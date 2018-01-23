@@ -45,11 +45,11 @@ namespace PenteApplication
         public int FillGameGrid(int size)
         {
             gameIntersections = new List<Intersection>();
-            Gameboard.Rows = (int)BoardSizeSlider.Value - 1;
-            Gameboard.Columns = (int)BoardSizeSlider.Value - 1;
-            GameButtons.Rows = (int)BoardSizeSlider.Value;
-            GameButtons.Columns = (int)BoardSizeSlider.Value;
-            for (int i = 0; i < BoardSizeSlider.Value; i++)
+            Gameboard.Rows = size;
+            Gameboard.Columns = size;
+            GameButtons.Rows = size + 1;
+            GameButtons.Columns = size + 1;
+            for (int i = 0; i < size; i++)
             {
                 for(int j = 0; j < size; j++)
                 {
@@ -62,9 +62,9 @@ namespace PenteApplication
             GameButtons.Height = 700 - (BoardSizeSlider.Value * 1.5);
             GameButtons.Width = 700 - (BoardSizeSlider.Value * 1.5);
 
-            for (int i = 0; i < BoardSizeSlider.Value; i++)
+            for (int i = 0; i < size + 1; i++)
             {
-                for (int j = 0; j < BoardSizeSlider.Value; j++)
+                for (int j = 0; j < size + 1; j++)
                 {
                     Button intersection = new Button();
                     Intersection inter = new Intersection();
