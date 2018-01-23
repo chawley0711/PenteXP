@@ -25,6 +25,8 @@ namespace PenteApplication
         public bool pvp;
         public string CpuName = "GOD";
         public List<Intersection> gameIntersections;
+        public List<List<int>> foundTria;
+        public List<List<int>> foundTessera;
         public bool P1Turn = false;
         public MainWindow()
         {
@@ -42,7 +44,7 @@ namespace PenteApplication
         }
 
         //Jordon and Collin
-        public void fillGameGrid()
+        public int fillGameGrid(int size)
         {
             gameIntersections = new List<Intersection>();
             Gameboard.Rows = size;
@@ -71,8 +73,6 @@ namespace PenteApplication
                     intersection.Opacity = 1;
                     intersection.HorizontalContentAlignment = HorizontalAlignment.Stretch;
                     intersection.VerticalContentAlignment = VerticalAlignment.Stretch;
-                    //intersection.Height = Gameboard.Height * (((BoardSizeSlider.Value / 2) / 100));
-                    //intersection.Width = Gameboard.Width * (((BoardSizeSlider.Value / 2) / 100));
                     Binding b = new Binding("IntersectionFill");
                     b.Mode = BindingMode.OneWay;
                     intersection.DataContext = inter;
@@ -83,6 +83,7 @@ namespace PenteApplication
                     GameButtons.Children.Add(intersection);
                 }
             }
+            return Gameboard.Columns;
         }
         //Austin and Jarrett
         public void PvPButton_Click(object sender, RoutedEventArgs e)
@@ -101,7 +102,7 @@ namespace PenteApplication
         //Austin and Jarrett
         public void PlayerSubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            fillGameGrid();
+            fillGameGrid((int)BoardSizeSlider.Value - 1);
             string tempName1 = Player1NameTextBox.Text;
             Player1Naming(tempName1);
             if(pvp)
@@ -148,13 +149,16 @@ namespace PenteApplication
         public void PlaceStone_Click(object sender, RoutedEventArgs e)
         {
             Button b = (Button)sender;
-            if(((Intersection)b.DataContext).IntersectionFill == Fill.Empty)
+            if (((Intersection)b.DataContext).IntersectionFill == Fill.Empty)
             {
+                AnnouncementPlayerLabel.Visibility = Visibility.Hidden;
+                AnnouncementConstantLabel.Visibility = Visibility.Hidden;
+                AnnouncementTypeLabel.Visibility = Visibility.Hidden;
                 b.Opacity = 1;
                 b.Style = (Style)Application.Current.Resources["MyButtonStyle"];
                 Intersection i = (Intersection)b.DataContext;
                 int index = gameIntersections.IndexOf(i);
-                if(!P1Turn)
+                if (!P1Turn)
                 {
                     i.IntersectionFill = Fill.White;
                 }
@@ -163,8 +167,16 @@ namespace PenteApplication
                     i.IntersectionFill = Fill.Black;
                 }
                 CheckForCapture(index);
-                CheckForTessera(Fill.White);
-                CheckForTria(Fill.White);
+                if (!P1Turn)
+                {
+                    CheckForTessera(Fill.White);
+                    CheckForTria(Fill.White);
+                }
+                else
+                {
+                    CheckForTessera(Fill.Black);
+                    CheckForTria(Fill.Black);
+                }
                 P1Turn = !P1Turn;
             }
         }
@@ -176,32 +188,32 @@ namespace PenteApplication
             List<List<int>> math = new List<List<int>>()
             {
                 new List<int>() {
-                   (GameButtons.Columns * 2) - 2,
                    GameButtons.Columns - 1,
+                   (GameButtons.Columns * 2) - 2,
                    (GameButtons.Columns * 3) - 3,
-                   -GameButtons.Columns + 1,
-                   (GameButtons.Columns * 4) - 4
+                   (GameButtons.Columns * 4) - 4,
+                   -GameButtons.Columns + 1
                 },
                 new List<int>() {
-                   GameButtons.Columns * 2,
                    GameButtons.Columns,
+                   GameButtons.Columns * 2,
                    GameButtons.Columns * 3,
-                   -GameButtons.Columns,
                    GameButtons.Columns * 4,
+                   -GameButtons.Columns
                 },
                 new List<int>() {
-                   (GameButtons.Columns * 2) + 2,
                    GameButtons.Columns + 1,
+                   (GameButtons.Columns * 2) + 2,
                    (GameButtons.Columns * 3) + 3,
-                   -GameButtons.Columns - 1,
                    (GameButtons.Columns * 4) + 4,
+                   -GameButtons.Columns - 1
                 },
                 new List<int>() {
                    1,
                    2,
                    3,
-                   -1,
-                   4
+                   4,
+                   -1
                 }
             };
 
@@ -211,26 +223,32 @@ namespace PenteApplication
                 {
                     try
                     {
-                        if ((gameIntersections.ElementAt(x + math[i].ElementAt(0)).IntersectionFill == color &&
-                        gameIntersections.ElementAt(x + math[i].ElementAt(1)).IntersectionFill == color &&
-                        gameIntersections.ElementAt(x + math[i].ElementAt(2)).IntersectionFill == color &&
-                        gameIntersections.ElementAt(x + math[i].ElementAt(3)).IntersectionFill == Fill.Empty) ||
-                        (gameIntersections.ElementAt(x + math[i].ElementAt(0)).IntersectionFill == color &&
-                        gameIntersections.ElementAt(x + math[i].ElementAt(1)).IntersectionFill == color &&
-                        gameIntersections.ElementAt(x + math[i].ElementAt(2)).IntersectionFill == color &&
-                        gameIntersections.ElementAt(x + math[i].ElementAt(4)).IntersectionFill == Fill.Empty))
+                        if ((gameIntersections.ElementAt(x + math[i][0]).IntersectionFill == color &&
+                        gameIntersections.ElementAt(x + math[i][1]).IntersectionFill == color &&
+                        gameIntersections.ElementAt(x + math[i][2]).IntersectionFill == color &&
+                        gameIntersections.ElementAt(x + math[i][3]).IntersectionFill == Fill.Empty) ||
+                        (gameIntersections.ElementAt(x + math[i][0]).IntersectionFill == color &&
+                        gameIntersections.ElementAt(x + math[i][1]).IntersectionFill == color &&
+                        gameIntersections.ElementAt(x + math[i][2]).IntersectionFill == color &&
+                        gameIntersections.ElementAt(x + math[i][4]).IntersectionFill == Fill.Empty))
                         {
-                            //say player has tessera
+                            if(color == Fill.White)
+                            {
+                                AnnouncementPlayerLabel.Content = Player2Name;
+                            }
+                            else
+                            {
+                                AnnouncementPlayerLabel.Content = Player1Name;
+                            }
+                            AnnouncementTypeLabel.Content = "Tessera";
+                            AnnouncementPlayerLabel.Visibility = Visibility.Visible;
+                            AnnouncementConstantLabel.Visibility = Visibility.Visible;
+                            AnnouncementTypeLabel.Visibility = Visibility.Visible;
                         }
                     }
                     catch (Exception e) { }
                 }
             });
-
-            if (color == Fill.White)
-            {
-                CheckForTria(Fill.Black);
-            }
         }
 
         //Collin and Jordon
@@ -241,26 +259,26 @@ namespace PenteApplication
             List<List<int>> math = new List<List<int>>()
             {
                 new List<int>() {
-                   (GameButtons.Columns * 2) - 2,
                    GameButtons.Columns - 1,
+                   (GameButtons.Columns * 2) - 2,
                    (GameButtons.Columns * 3) - 3,
                    -GameButtons.Columns + 1
                 },
                 new List<int>() {
-                   GameButtons.Columns * 2,
                    GameButtons.Columns,
+                   GameButtons.Columns * 2,
                    GameButtons.Columns * 3,
                    -GameButtons.Columns
                 },
                 new List<int>() {
-                   (GameButtons.Columns * 2) + 2,
                    GameButtons.Columns + 1,
+                   (GameButtons.Columns * 2) + 2,
                    (GameButtons.Columns * 3) + 3,
                    -GameButtons.Columns - 1
                 },
                 new List<int>() {
-                   2,
                    1,
+                   2,
                    3,
                    -1,
                 }
@@ -272,22 +290,37 @@ namespace PenteApplication
                 {
                     try
                     {
-                        if (gameIntersections.ElementAt(x + math[i].ElementAt(0)).IntersectionFill == color &&
-                        gameIntersections.ElementAt(x + math[i].ElementAt(1)).IntersectionFill == color &&
-                        gameIntersections.ElementAt(x + math[i].ElementAt(2)).IntersectionFill == color &&
-                        gameIntersections.ElementAt(x + math[i].ElementAt(3)).IntersectionFill == Fill.Empty)
+                        if (gameIntersections.ElementAt(x + math[i][0]).IntersectionFill == color &&
+                        gameIntersections.ElementAt(x + math[i][1]).IntersectionFill == color &&
+                        gameIntersections.ElementAt(x + math[i][2]).IntersectionFill == Fill.Empty &&
+                        gameIntersections.ElementAt(x + math[i][3]).IntersectionFill == Fill.Empty)
                         {
-                            //say player has tria
+                            int colHolder = (x + math[i][0]) % GameButtons.Columns;
+                            int rowHolder = (x + math[i][0]) / GameButtons.Columns;
+                            if (((x + math[i][0]) / GameButtons.Columns == colHolder &&
+                            (x + math[i][1]) / GameButtons.Columns == colHolder &&
+                            (x + math[i][2]) / GameButtons.Columns == colHolder && //checking to see if in same column
+                            (x + math[i][3]) / GameButtons.Columns == colHolder)) //or same row, or diagonal (both ways)
+                            {
+                                //then do things
+                            }
+                            if (color == Fill.White)
+                            {
+                                AnnouncementPlayerLabel.Content = Player2Name;
+                            }
+                            else
+                            {
+                                AnnouncementPlayerLabel.Content = Player1Name;
+                            }
+                            AnnouncementTypeLabel.Content = "Tria";
+                            AnnouncementPlayerLabel.Visibility = Visibility.Visible;
+                            AnnouncementConstantLabel.Visibility = Visibility.Visible;
+                            AnnouncementTypeLabel.Visibility = Visibility.Visible;
                         }
                     }
                     catch (Exception e) { }
                 }
             });
-
-            if(color == Fill.White)
-            {
-                CheckForTria(Fill.Black);
-            }
         }
 
         //Collin and Jordon

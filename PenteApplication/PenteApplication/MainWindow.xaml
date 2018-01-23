@@ -17,7 +17,6 @@
             </Grid.ColumnDefinitions>
             <UniformGrid x:Name="Gameboard" Grid.Column="1" Margin="15" Height="625" Width="625" />
             <UniformGrid x:Name="GameButtons" Grid.Column="1" Margin="-20, -20" Height="700" Width="700"/>
-            <!-- Background="BurlyWood"-->
             <Border BorderBrush="Black" BorderThickness="3" Width="3" Height="700" HorizontalAlignment="Right" Margin="0, 0, 0, 0"/>
             <StackPanel x:Name="GameInfo" Margin="5">
                 <Menu x:Name="GameMenu"
