@@ -20,6 +20,15 @@ namespace PenteApplication
     /// </summary>
     public partial class MainWindow : Window
     {
+        //finish straight like checks
+        //make random AI
+        //20 second timer with pause
+        //show who's turn it is
+        //make sure diagonal captures and tria/tessera work
+        //Tournament rule for player 1
+        //unit tests
+        //play again
+        //save/load
         public string Player1Name;
         public string Player2Name;
         public bool pvp;
