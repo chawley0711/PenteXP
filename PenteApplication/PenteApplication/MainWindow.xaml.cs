@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Timers;
 using System.Threading.Tasks;
@@ -496,5 +500,37 @@ namespace PenteApplication
                 } catch(Exception e) { }
             }
         }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog s = new SaveFileDialog();
+            s.Filter = ".pnt | Pente";
+            s.ShowDialog();
+            IFormatter format = new BinaryFormatter();
+            Stream slip = new FileStream(s.FileName, FileMode.Create, FileAccess.Write, FileShare.None);
+            //format.Serialize(slip, );
+        }
+
+        private void SaveAs_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog s = new SaveFileDialog();
+            s.Filter = ".pnt | Pente";
+            s.ShowDialog();
+            IFormatter format = new BinaryFormatter();
+            Stream slip = new FileStream(s.FileName, FileMode.Create, FileAccess.Write, FileShare.None);
+            //format.Serialize(slip, );
+        }
+
+        private void Open_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog o = new OpenFileDialog();
+            o.Filter = ".pnt | Pente";
+            o.ShowDialog();
+            IFormatter format = new BinaryFormatter();
+            Stream slip = new FileStream(o.FileName, FileMode.Open);
+            //people = ()format.Deserialize(slip);
+        }
+
+
     }
 } 
