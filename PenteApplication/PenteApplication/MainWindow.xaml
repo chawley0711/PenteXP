@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:PenteApplication"
         x:Name="GameWindow"
         mc:Ignorable="d"
-        Title="Pente" Height="700" Width="1050">
+        Title="Pente" Height="700" Width="1050"
+        WindowStartupLocation="Manual" 
+        Left="115" Top="0">
     <Window.CommandBindings>
         <CommandBinding Command="Save"
                         Executed="Save_Click"/>
