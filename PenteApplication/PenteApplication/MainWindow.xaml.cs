@@ -57,7 +57,6 @@ namespace PenteApplication
             int index = (GameButtons.Rows * GameButtons.Columns) / 2;
             int Rindex = GameButtons.Rows / 2;
             int Cindex = GameButtons.Columns / 2;
-            //gameIntersections2D[Cindex][Rindex].IntersectionFill = Fill.Black;
             gameIntersections[index].IntersectionFill = Fill.Black;
             Button b = (Button)GameButtons.Children[index];
             b.Opacity = 1;
@@ -402,8 +401,8 @@ namespace PenteApplication
         //Collin and Jordon
         public bool CheckForTessera(Fill color)
         {
-            bool found = false;
             List<int> intersections = gameIntersections.Where(x => x.IntersectionFill == color).Select(y => gameIntersections.IndexOf(y)).ToList();
+            List<List<int>> current = new List<List<int>>();
             List<List<int>> math = new List<List<int>>()
             {
                 new List<int>() {
@@ -479,58 +478,68 @@ namespace PenteApplication
                             (row4 + 3 == row1 && col4 + 3 == col1) &&
                             (row5 + 4 == row1 && col5 + 4 == col1)))
                             {
-                                if (color == Fill.White)
+                                current.Add(new List<int>()
                                 {
-                                    if(!foundWhiteTessera.Contains(new List<int>()
-                                    {
-                                        x,
-                                        (x + math[i][0]),
-                                        (x + math[i][1]),
-                                        (x + math[i][2])
-                                    }))
-                                    {
-                                        AnnouncementPlayerLabel.Content = Player2Name;
-                                        foundWhiteTessera.Add(new List<int>()
-                                        {
-                                            x,
-                                            (x + math[i][0]),
-                                            (x + math[i][1]),
-                                            (x + math[i][2])
-                                        });
-                                    }
-                                    
-                                }
-                                else
-                                {
-                                    if (!foundWhiteTessera.Contains(new List<int>()
-                                    {
-                                        x,
-                                        (x + math[i][0]),
-                                        (x + math[i][1]),
-                                        (x + math[i][2])
-                                    }))
-                                    {
-                                        AnnouncementPlayerLabel.Content = Player1Name;
-                                        foundBlackTessera.Add(new List<int>()
-                                        {
-                                            x,
-                                            (x + math[i][0]),
-                                            (x + math[i][1]),
-                                            (x + math[i][2])
-                                        });
-                                    }
-                                }
-                                found = true;
-                                AnnouncementTypeLabel.Content = "Tessera";
-                                AnnouncementPlayerLabel.Visibility = Visibility.Visible;
-                                AnnouncementConstantLabel.Visibility = Visibility.Visible;
-                                AnnouncementTypeLabel.Visibility = Visibility.Visible;
+                                    x,
+                                    (x + math[i][0]),
+                                    (x + math[i][1]),
+                                    (x + math[i][2])
+                                });
                             }
                         }
                     }
                     catch (Exception e) { }
                 }
             });
+            return CheckCurrentAndFound(current, color);
+        }
+        public bool CheckCurrentAndFound(List<List<int>> current, Fill color)
+        {
+            bool found = false;
+            if (color == Fill.White)
+            {
+                foreach (List<int> tess in current)
+                {
+                    if (!foundWhiteTessera.Contains(tess)) //ask mr. krebs why
+                    {
+                        foundWhiteTessera.Add(tess);
+                        found = true;
+                        AnnouncementTypeLabel.Content = "Tessera";
+                        AnnouncementPlayerLabel.Visibility = Visibility.Visible;
+                        AnnouncementConstantLabel.Visibility = Visibility.Visible;
+                        AnnouncementTypeLabel.Visibility = Visibility.Visible;
+                    }
+                }
+                foreach (List<int> tess in foundWhiteTessera)
+                {
+                    if (!current.Contains(tess))
+                    {
+                        foundWhiteTessera.Remove(tess);
+                    }
+                }
+            }
+            else
+            {
+                foreach (List<int> tess in current)
+                {
+                    if (!foundBlackTessera.Contains(tess))
+                    {
+                        foundBlackTessera.Add(tess);
+                        found = true;
+                        AnnouncementTypeLabel.Content = "Tessera";
+                        AnnouncementPlayerLabel.Visibility = Visibility.Visible;
+                        AnnouncementConstantLabel.Visibility = Visibility.Visible;
+                        AnnouncementTypeLabel.Visibility = Visibility.Visible;
+                    }
+                }
+                foreach (List<int> tess in foundBlackTessera)
+                {
+                    if (!current.Contains(tess))
+                    {
+                        foundBlackTessera.Remove(tess);
+                    }
+                }
+            }
             return found;
         }
         //Collin and Jordon
