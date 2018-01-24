@@ -381,11 +381,13 @@ namespace PenteApplication
                     catch (Exception e) { }
                 }
             });
+            return tria;
         }
 
         //Collin and Jordon
-        public void CheckForCapture(int index)
+        public bool CheckForCapture(int index)
         {
+            bool capture = false;
             Fill color = gameIntersections.ElementAt(index).IntersectionFill;
             Fill opposite = Fill.Empty;
             if(color == Fill.White)
@@ -422,6 +424,7 @@ namespace PenteApplication
                                     {
                                         gameIntersections.ElementAt(index + ((-GameButtons.Rows * 2) - 2)).IntersectionFill = Fill.Empty;
                                         gameIntersections.ElementAt(index + (-GameButtons.Rows - 1)).IntersectionFill = Fill.Empty;
+                                        capture = true;
                                     }
                                 } catch (Exception e) { }
                                 break;
@@ -433,6 +436,8 @@ namespace PenteApplication
                                     {
                                         gameIntersections.ElementAt(index + (-GameButtons.Rows * 2)).IntersectionFill = Fill.Empty;
                                         gameIntersections.ElementAt(index + (-GameButtons.Rows)).IntersectionFill = Fill.Empty;
+                                        capture = true;
+
                                     }
                                 } catch(Exception e) { }
                                 break;
@@ -444,6 +449,8 @@ namespace PenteApplication
                                     {
                                         gameIntersections.ElementAt(index + ((-GameButtons.Rows * 2) + 2)).IntersectionFill = Fill.Empty;
                                         gameIntersections.ElementAt(index + (-GameButtons.Rows + 1)).IntersectionFill = Fill.Empty;
+                                        capture = true;
+
                                     }
                                 } catch (Exception e) { }
                                 break;
@@ -455,6 +462,8 @@ namespace PenteApplication
                                     {
                                         gameIntersections.ElementAt(index + ((GameButtons.Rows * 2) - 2)).IntersectionFill = Fill.Empty;
                                         gameIntersections.ElementAt(index + (GameButtons.Rows - 1)).IntersectionFill = Fill.Empty;
+                                        capture = true;
+
                                     }
                                 }
                                 catch (Exception e) { }
@@ -467,6 +476,8 @@ namespace PenteApplication
                                     {
                                         gameIntersections.ElementAt(index + (GameButtons.Rows * 2)).IntersectionFill = Fill.Empty;
                                         gameIntersections.ElementAt(index + (GameButtons.Rows)).IntersectionFill = Fill.Empty;
+                                        capture = true;
+
                                     }
                                 }
                                 catch (Exception e) { }
@@ -479,6 +490,8 @@ namespace PenteApplication
                                     {
                                         gameIntersections.ElementAt(index + ((GameButtons.Rows * 2) + 2)).IntersectionFill = Fill.Empty;
                                         gameIntersections.ElementAt(index + (GameButtons.Rows + 1)).IntersectionFill = Fill.Empty;
+                                        capture = true;
+
                                     }
                                 }
                                 catch (Exception e) { }
@@ -491,6 +504,8 @@ namespace PenteApplication
                                     {
                                         gameIntersections.ElementAt(index + 2).IntersectionFill = Fill.Empty;
                                         gameIntersections.ElementAt(index + 1).IntersectionFill = Fill.Empty;
+                                        capture = true;
+
                                     }
                                 }
                                 catch (Exception e) { }
@@ -503,6 +518,8 @@ namespace PenteApplication
                                     {
                                         gameIntersections.ElementAt(index - 2).IntersectionFill = Fill.Empty;
                                         gameIntersections.ElementAt(index - 1).IntersectionFill = Fill.Empty;
+                                        capture = true;
+
                                     }
                                 }
                                 catch (Exception e) { }
@@ -511,6 +528,7 @@ namespace PenteApplication
                     }
                 } catch(Exception e) { }
             }
+                    return capture;
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
