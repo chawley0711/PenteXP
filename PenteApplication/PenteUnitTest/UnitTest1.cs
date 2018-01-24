@@ -1,6 +1,7 @@
 ﻿using System;
 using PenteApplication;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Windows.Controls;
 
 namespace PenteUnitTest
 {
@@ -120,6 +121,21 @@ namespace PenteUnitTest
             MainWindow mw = new MainWindow();
             int size = mw.FillGameGrid(24);
             Assert.AreEqual(24, size);
+        }
+
+        //Austin and Jarrett
+        [TestMethod]
+        public void PlaceStoneP1()
+        {
+            MainWindow mw = new MainWindow();
+            mw.P1Turn = true;
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void PlaceStoneP2()
+        {
+            MainWindow mw = new MainWindow();
+            mw.P1Turn = false;
         }
     }
 }
