@@ -156,7 +156,7 @@ namespace PenteUnitTest
         }
         //Austin and Jarrett
         [TestMethod]
-        public void CheckHorizontalCapture()
+        public void CheckHorizontalBlackCaptureWhite()
         {
             MainWindow mw = new MainWindow();
             mw.FillGameGrid(8);
@@ -169,7 +169,7 @@ namespace PenteUnitTest
         }
         //Austin and Jarrett
         [TestMethod]
-        public void CheckHorizontalNonCapture()
+        public void CheckHorizontalBlackNonCaptureWhite()
         {
             MainWindow mw = new MainWindow();
             mw.FillGameGrid(8);
@@ -182,7 +182,7 @@ namespace PenteUnitTest
         }
         //Austin and Jarrett
         [TestMethod]
-        public void CheckVerticalCapture()
+        public void CheckVerticalBlackCaptureWhite()
         {
             MainWindow mw = new MainWindow();
             mw.FillGameGrid(8);
@@ -195,7 +195,7 @@ namespace PenteUnitTest
         }
         //Austin and Jarrett
         [TestMethod]
-        public void CheckVerticalNonCapture()
+        public void CheckVerticalBlackNonCaptureWhite()
         {
             MainWindow mw = new MainWindow();
             mw.FillGameGrid(8);
@@ -208,7 +208,7 @@ namespace PenteUnitTest
         }
         //Austin and Jarrett
         [TestMethod]
-        public void CheckDiagonalCapture()
+        public void CheckDiagonalBlackCaptureWhite()
         {
             MainWindow mw = new MainWindow();
             mw.FillGameGrid(8);
@@ -221,7 +221,7 @@ namespace PenteUnitTest
         }
         //Austin and Jarrett
         [TestMethod]
-        public void CheckDiagonalNonCapture()
+        public void CheckDiagonalBlackNonCaptureWhite()
         {
             MainWindow mw = new MainWindow();
             mw.FillGameGrid(8);
@@ -230,6 +230,214 @@ namespace PenteUnitTest
             mw.gameIntersections[20].IntersectionFill = Fill.Black;
             mw.gameIntersections[30].IntersectionFill = Fill.Black;
             bool test = mw.CheckForCapture(30);
+            Assert.AreEqual(false, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckHorizontalBlackNonCaptureBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.Black;
+            mw.gameIntersections[1].IntersectionFill = Fill.Black;
+            mw.gameIntersections[2].IntersectionFill = Fill.Black;
+            mw.gameIntersections[3].IntersectionFill = Fill.Black;
+            bool test = mw.CheckForCapture(3);
+            Assert.AreEqual(false, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckVerticalBlackNonCaptureBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.Black;
+            mw.gameIntersections[9].IntersectionFill = Fill.Black;
+            mw.gameIntersections[18].IntersectionFill = Fill.Black;
+            mw.gameIntersections[27].IntersectionFill = Fill.Black;
+            bool test = mw.CheckForCapture(27);
+            Assert.AreEqual(false, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckDiagonalBlackNonCaptureBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.Black;
+            mw.gameIntersections[10].IntersectionFill = Fill.Black;
+            mw.gameIntersections[20].IntersectionFill = Fill.Black;
+            mw.gameIntersections[30].IntersectionFill = Fill.Black;
+            bool test = mw.CheckForCapture(30);
+            Assert.AreEqual(false, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckHorizontalWhiteCaptureBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.White;
+            mw.gameIntersections[1].IntersectionFill = Fill.Black;
+            mw.gameIntersections[2].IntersectionFill = Fill.Black;
+            mw.gameIntersections[3].IntersectionFill = Fill.White;
+            bool test = mw.CheckForCapture(3);
+            Assert.AreEqual(true, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckHorizontalWhiteNonCaptureBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.White;
+            mw.gameIntersections[1].IntersectionFill = Fill.White;
+            mw.gameIntersections[2].IntersectionFill = Fill.Black;
+            mw.gameIntersections[3].IntersectionFill = Fill.White;
+            bool test = mw.CheckForCapture(3);
+            Assert.AreEqual(false, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckVerticalWhiteCaptureBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.White;
+            mw.gameIntersections[9].IntersectionFill = Fill.Black;
+            mw.gameIntersections[18].IntersectionFill = Fill.Black;
+            mw.gameIntersections[27].IntersectionFill = Fill.White;
+            bool test = mw.CheckForCapture(27);
+            Assert.AreEqual(true, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckVerticalWhiteNonCaptureBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.White;
+            mw.gameIntersections[9].IntersectionFill = Fill.White;
+            mw.gameIntersections[18].IntersectionFill = Fill.Black;
+            mw.gameIntersections[27].IntersectionFill = Fill.White;
+            bool test = mw.CheckForCapture(27);
+            Assert.AreEqual(false, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckDiagonalWhiteCaptureBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.White;
+            mw.gameIntersections[10].IntersectionFill = Fill.Black;
+            mw.gameIntersections[20].IntersectionFill = Fill.Black;
+            mw.gameIntersections[30].IntersectionFill = Fill.White;
+            bool test = mw.CheckForCapture(30);
+            Assert.AreEqual(true, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckDiagonalWhiteNonCaptureBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.White;
+            mw.gameIntersections[10].IntersectionFill = Fill.White;
+            mw.gameIntersections[20].IntersectionFill = Fill.Black;
+            mw.gameIntersections[30].IntersectionFill = Fill.White;
+            bool test = mw.CheckForCapture(30);
+            Assert.AreEqual(false, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckHorizontalWhiteNonCaptureWhite()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.White;
+            mw.gameIntersections[1].IntersectionFill = Fill.White;
+            mw.gameIntersections[2].IntersectionFill = Fill.White;
+            mw.gameIntersections[3].IntersectionFill = Fill.White;
+            bool test = mw.CheckForCapture(3);
+            Assert.AreEqual(false, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckVerticalWhiteNonCaptureWhite()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.White;
+            mw.gameIntersections[9].IntersectionFill = Fill.White;
+            mw.gameIntersections[18].IntersectionFill = Fill.White;
+            mw.gameIntersections[27].IntersectionFill = Fill.White;
+            bool test = mw.CheckForCapture(27);
+            Assert.AreEqual(false, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckDiagonalWhiteNonCaptureWhite()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.White;
+            mw.gameIntersections[10].IntersectionFill = Fill.White;
+            mw.gameIntersections[20].IntersectionFill = Fill.White;
+            mw.gameIntersections[30].IntersectionFill = Fill.White;
+            bool test = mw.CheckForCapture(30);
+            Assert.AreEqual(false, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckHorizontalEdgeWhiteNonCaptureWhite()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[7].IntersectionFill = Fill.White;
+            mw.gameIntersections[8].IntersectionFill = Fill.White;
+            mw.gameIntersections[9].IntersectionFill = Fill.White;
+            mw.gameIntersections[10].IntersectionFill = Fill.White;
+            bool test = mw.CheckForCapture(10);
+            Assert.AreEqual(false, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckHorizontalEdgeBlackNonCaptureWhite()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[7].IntersectionFill = Fill.Black;
+            mw.gameIntersections[8].IntersectionFill = Fill.White;
+            mw.gameIntersections[9].IntersectionFill = Fill.White;
+            mw.gameIntersections[10].IntersectionFill = Fill.Black;
+            bool test = mw.CheckForCapture(10);
+            Assert.AreEqual(false, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckHorizontalEdgeBlackNonCaptureBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[7].IntersectionFill = Fill.Black;
+            mw.gameIntersections[8].IntersectionFill = Fill.Black;
+            mw.gameIntersections[9].IntersectionFill = Fill.Black;
+            mw.gameIntersections[10].IntersectionFill = Fill.Black;
+            bool test = mw.CheckForCapture(10);
+            Assert.AreEqual(false, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckHorizontalEdgeWhiteNonCaptureBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[7].IntersectionFill = Fill.White;
+            mw.gameIntersections[8].IntersectionFill = Fill.Black;
+            mw.gameIntersections[9].IntersectionFill = Fill.Black;
+            mw.gameIntersections[10].IntersectionFill = Fill.White;
+            bool test = mw.CheckForCapture(10);
             Assert.AreEqual(false, test);
         }
         //Austin and Jarrett
