@@ -26,7 +26,6 @@ namespace PenteApplication
     public partial class MainWindow : Window
     {
         //make random AI
-        //Tournament rule for player 1
         //display only new tria/tessera (check all current tria, compare to found, if less, remove the one not found, if more, add the one found and display, if same, do nothing)
         //unit tests
         //play again
@@ -39,13 +38,14 @@ namespace PenteApplication
         public List<List<Intersection>> gameIntersections2D;
         public Timer turnTimer;
         public int timerSec = 20;
-        public List<List<int>> foundBlackTria;
-        public List<List<int>> foundBlackTessera;
-        public List<List<int>> foundWhiteTria;
-        public List<List<int>> foundWhiteTessera;
+        public List<List<int>> foundBlackTria = new List<List<int>>();
+        public List<List<int>> foundBlackTessera = new List<List<int>>();
+        public List<List<int>> foundWhiteTria = new List<List<int>>();
+        public List<List<int>> foundWhiteTessera = new List<List<int>>();
         public bool P1Turn = false;
         public int P1Cap = 0;
         public int P2Cap = 0;
+        public bool firstPlacement = true;
         public MainWindow()
         {
             InitializeComponent();
@@ -206,58 +206,89 @@ namespace PenteApplication
             }
             lblP1Captures.Content = Player1Name + "'s captures:";
         }
+        public void flip(Button b, Intersection i, int index)
+        {
+            AnnouncementPlayerLabel.Visibility = Visibility.Hidden;
+            AnnouncementConstantLabel.Visibility = Visibility.Hidden;
+            AnnouncementTypeLabel.Visibility = Visibility.Hidden;
+            b.Opacity = 1;
+            b.Style = (Style)Application.Current.Resources["MyButtonStyle"];
+
+            if (!P1Turn)
+            {
+                i.IntersectionFill = Fill.White;
+            }
+            else
+            {
+                i.IntersectionFill = Fill.Black;
+            }
+            CheckForCapture(index);
+            if (!P1Turn)
+            {
+                bool done = CheckForWin(Fill.White);
+                bool found = false;
+                if (!done)
+                {
+                    found = CheckForTessera(Fill.White);
+                }
+                if (!found)
+                {
+                    CheckForTria(Fill.White);
+                }
+                lblPlayer.Content = Player1Name + "'s turn";
+            }
+            else
+            {
+                bool done = CheckForWin(Fill.Black);
+                bool found = false;
+                if (!done)
+                {
+                    found = CheckForTessera(Fill.Black);
+                }
+                if (!found)
+                {
+                    CheckForTria(Fill.Black);
+                }
+                lblPlayer.Content = Player2Name + "'s turn";
+            }
+            P1Turn = !P1Turn;
+            timerSec = 20;
+        }
         //Collin and Jordon
         public void PlaceStone_Click(object sender, RoutedEventArgs e)
         {
             Button b = (Button)sender;
             if (((Intersection)b.DataContext).IntersectionFill == Fill.Empty)
             {
-                AnnouncementPlayerLabel.Visibility = Visibility.Hidden;
-                AnnouncementConstantLabel.Visibility = Visibility.Hidden;
-                AnnouncementTypeLabel.Visibility = Visibility.Hidden;
-                b.Opacity = 1;
-                b.Style = (Style)Application.Current.Resources["MyButtonStyle"];
                 Intersection i = (Intersection)b.DataContext;
                 int index = gameIntersections.IndexOf(i);
-                if (!P1Turn)
+                int middle = (GameButtons.Rows * GameButtons.Rows - 1) / 2;
+                int upMiddle = middle - GameButtons.Rows;
+                int upUpMiddle = upMiddle - GameButtons.Rows;
+                int downMiddle = middle + GameButtons.Rows;
+                int downDownMiddle = downMiddle + GameButtons.Rows;
+                if (P1Turn)
                 {
-                    i.IntersectionFill = Fill.White;
+                    if (firstPlacement)
+                    {
+
+                        if (!((index <= middle + 2 && index >= middle - 2) || (index <= upMiddle + 2 && index >= upMiddle - 2)
+                        || (index <= upUpMiddle + 2 && index >= upUpMiddle - 2) || (index <= downMiddle + 2 && index >= downMiddle - 2)
+                        || (index <= downDownMiddle + 2 && index >= downDownMiddle - 2)))
+                        {
+                            flip(b, i, index);
+                            firstPlacement = false;
+                        }
+                    }
+                    else
+                    {
+                        flip(b, i, index);
+                    }
                 }
                 else
                 {
-                    i.IntersectionFill = Fill.Black;
+                    flip(b, i, index);
                 }
-                CheckForCapture(index);
-                if (!P1Turn)
-                {
-                    bool done = CheckForWin(Fill.White);
-                    bool found = false;
-                    if (!done)
-                    {
-                        found = CheckForTessera(Fill.White);
-                    }
-                    if (!found)
-                    {
-                        CheckForTria(Fill.White);
-                    }
-                    lblPlayer.Content = Player1Name + "'s turn";
-                }
-                else
-                {
-                    bool done = CheckForWin(Fill.Black);
-                    bool found = false;
-                    if(!done)
-                    {
-                        found = CheckForTessera(Fill.Black);
-                    }
-                    if(!found)
-                    {
-                        CheckForTria(Fill.Black);
-                    }
-                    lblPlayer.Content = Player2Name + "'s turn";
-                }
-                P1Turn = !P1Turn;
-                timerSec = 20;
             }
         }
         //Jordon and Collin
@@ -467,6 +498,7 @@ namespace PenteApplication
                                             (x + math[i][2])
                                         });
                                     }
+                                    
                                 }
                                 else
                                 {
@@ -506,6 +538,7 @@ namespace PenteApplication
         {
             List<int> intersections = gameIntersections.Where(x => x.IntersectionFill == color).Select(y => gameIntersections.IndexOf(y)).ToList();
             List<List<int>> math = new List<List<int>>()
+            
             {
                 new List<int>() {
                    GameButtons.Columns - 1,
