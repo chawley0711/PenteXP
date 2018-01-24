@@ -88,7 +88,7 @@ namespace PenteApplication
                         lblPlayer.Content = Player2Name + "'s turn";
                     }
                     turnTimer.Stop();
-                    MessageBoxResult result = MessageBox.Show("Your turn has been skipped :/");
+                    MessageBoxResult result = MessageBox.Show("Your turn has been skipped, ran out of time. :/");
                     timerSec = 20;
                     turnTimer.Start();
                 }
@@ -226,8 +226,13 @@ namespace PenteApplication
                 CheckForCapture(index);
                 if (!P1Turn)
                 {
-                    bool found = CheckForTessera(Fill.White);
-                    if(!found)
+                    bool done = CheckForWin(Fill.White);
+                    bool found = false;
+                    if (!done)
+                    {
+                        found = CheckForTessera(Fill.White);
+                    }
+                    if (!found)
                     {
                         CheckForTria(Fill.White);
                     }
@@ -235,7 +240,12 @@ namespace PenteApplication
                 }
                 else
                 {
-                    bool found = CheckForTessera(Fill.Black);
+                    bool done = CheckForWin(Fill.Black);
+                    bool found = false;
+                    if(!done)
+                    {
+                        found = CheckForTessera(Fill.Black);
+                    }
                     if(!found)
                     {
                         CheckForTria(Fill.Black);
@@ -245,6 +255,94 @@ namespace PenteApplication
                 P1Turn = !P1Turn;
                 timerSec = 20;
             }
+        }
+        public bool CheckForWin(Fill color)
+        {
+            bool found = false;
+            List<int> intersections = gameIntersections.Where(x => x.IntersectionFill == color).Select(y => gameIntersections.IndexOf(y)).ToList();
+            List<List<int>> math = new List<List<int>>()
+            {
+                new List<int>() {
+                   GameButtons.Columns - 1,
+                   (GameButtons.Columns * 2) - 2,
+                   (GameButtons.Columns * 3) - 3,
+                   (GameButtons.Columns * 4) - 4
+                },
+                new List<int>() {
+                   GameButtons.Columns,
+                   GameButtons.Columns * 2,
+                   GameButtons.Columns * 3,
+                   GameButtons.Columns * 4
+                },
+                new List<int>() {
+                   GameButtons.Columns + 1,
+                   (GameButtons.Columns * 2) + 2,
+                   (GameButtons.Columns * 3) + 3,
+                   (GameButtons.Columns * 4) + 4
+                },
+                new List<int>() {
+                   1,
+                   2,
+                   3,
+                   4
+                }
+            };
+
+            intersections.ForEach(x =>
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    try
+                    {
+                        if ((gameIntersections.ElementAt(x + math[i][0]).IntersectionFill == color &&
+                        gameIntersections.ElementAt(x + math[i][1]).IntersectionFill == color &&
+                        gameIntersections.ElementAt(x + math[i][2]).IntersectionFill == color &&
+                        gameIntersections.ElementAt(x + math[i][3]).IntersectionFill == color))
+                        {
+                            int col1 = (x + math[i][0]) % GameButtons.Columns;
+                            int col2 = (x + math[i][1]) % GameButtons.Columns;
+                            int col3 = (x + math[i][2]) % GameButtons.Columns;
+                            int col4 = (x + math[i][3]) % GameButtons.Columns;
+                            int row1 = (int)Math.Floor((decimal)(x + math[i][0]) / GameButtons.Columns);
+                            int row2 = (int)Math.Floor((decimal)(x + math[i][1]) / GameButtons.Columns);
+                            int row3 = (int)Math.Floor((decimal)(x + math[i][2]) / GameButtons.Columns);
+                            int row4 = (int)Math.Floor((decimal)(x + math[i][3]) / GameButtons.Columns);
+
+                            if ((col2 == col1 &&
+                            col3 == col1 &&
+                            col4 == col1) ||
+                            (row2 == row1 &&
+                            row3 == row1 &&
+                            row4 == row1) ||
+                            ((row2 + 1 == row1 && col2 - 1 == col1) &&
+                            (row3 + 2 == row1 && col3 - 2 == col1) &&
+                            (row4 + 3 == row1 && col4 - 3 == col1)) ||
+                            ((row2 + 1 == row1 && col2 + 1 == col1) &&
+                            (row3 + 2 == row1 && col3 + 2 == col1) &&
+                            (row4 + 3 == row1 && col4 + 3 == col1)))
+                            {
+                                if (color == Fill.White)
+                                {
+                                    MessageBoxResult result = MessageBox.Show(Player2Name + " wins!");
+                                    //end game
+                                }
+                                else
+                                {
+                                    MessageBoxResult result = MessageBox.Show(Player1Name + " wins!");
+                                    //end game
+                                }
+                                found = true;
+                                AnnouncementTypeLabel.Content = "Tessera";
+                                AnnouncementPlayerLabel.Visibility = Visibility.Visible;
+                                AnnouncementConstantLabel.Visibility = Visibility.Visible;
+                                AnnouncementTypeLabel.Visibility = Visibility.Visible;
+                            }
+                        }
+                    }
+                    catch (Exception e) { }
+                }
+            });
+            return found;
         }
         //Collin and Jordon
         public bool CheckForTessera(Fill color)
@@ -400,17 +498,17 @@ namespace PenteApplication
                             int row4 = (int)Math.Floor((decimal)(x + math[i][3]) / GameButtons.Columns);
 
                             if ((col2 == col1 &&
-                            col3 == col1 && //checking to see if in same column
+                            col3 == col1 &&
                             col4 == col1) ||
                             (row2 == row1 &&
-                            row3 == row1 && //checking to see if in same column
+                            row3 == row1 &&
                             row4 == row1) ||
                             ((row2 + 1 == row1 && col2 - 1 == col1) &&
                             (row3 + 2 == row1 && col3 - 2 == col1) &&
                             (row4 + 3 == row1 && col4 - 3 == col1)) ||
                             ((row2 + 1 == row1 && col2 + 1 == col1) &&
                             (row3 + 2 == row1 && col3 + 2 == col1) &&
-                            (row4 + 3 == row1 && col4 + 3 == col1))) //or same row, or diagonal (both ways)
+                            (row4 + 3 == row1 && col4 + 3 == col1)))
                             {
                                 if (color == Fill.White)
                                 {
@@ -461,109 +559,119 @@ namespace PenteApplication
                 {
                     int col = index % GameButtons.Columns;
                     int row = (int)Math.Floor((decimal)index / GameButtons.Columns);
-
-                    if((index + twoAway[i]) % GameButtons.Columns == col ||
-                       (int)Math.Floor((decimal)(index + twoAway[i]) / GameButtons.Columns) == row)
+                    if (gameIntersections.ElementAt(index + twoAway[i]).IntersectionFill == color)
                     {
-                        if (gameIntersections.ElementAt(index + twoAway[i]).IntersectionFill == color)
+                        switch (i)
                         {
-                            switch (i)
-                            {
-                                case 0:
-                                    try
+                            case 0:
+                                try
+                                {
+                                    if (gameIntersections.ElementAt(index + (-GameButtons.Rows * 2) - 2).IntersectionFill == opposite &&
+                                        gameIntersections.ElementAt(index + (-GameButtons.Rows - 1)).IntersectionFill == opposite)
                                     {
                                         gameIntersections.ElementAt(index + ((-GameButtons.Rows * 2) - 2)).IntersectionFill = Fill.Empty;
                                         gameIntersections.ElementAt(index + (-GameButtons.Rows - 1)).IntersectionFill = Fill.Empty;
                                         capture = true;
                                     }
+                                }
+                            catch (Exception e) { }
+                            break;
+                        case 1:
+                            try
+                            {
+                                if (gameIntersections.ElementAt(index + (-GameButtons.Rows * 2)).IntersectionFill == opposite &&
+                                    gameIntersections.ElementAt(index + (-GameButtons.Rows)).IntersectionFill == opposite)
+                                {
+                                    gameIntersections.ElementAt(index + (-GameButtons.Rows * 2)).IntersectionFill = Fill.Empty;
+                                    gameIntersections.ElementAt(index + (-GameButtons.Rows)).IntersectionFill = Fill.Empty;
+                                    capture = true;
+                                }
+                            } catch(Exception e) { }
+                            break;
+                        case 2:
+                            try
+                            {
+                                if (gameIntersections.ElementAt(index + ((-GameButtons.Rows * 2) + 2)).IntersectionFill == opposite &&
+                                    gameIntersections.ElementAt(index + (-GameButtons.Rows + 1)).IntersectionFill == opposite)
+                                {
+                                    gameIntersections.ElementAt(index + ((-GameButtons.Rows * 2) + 2)).IntersectionFill = Fill.Empty;
+                                    gameIntersections.ElementAt(index + (-GameButtons.Rows + 1)).IntersectionFill = Fill.Empty;
+                                    capture = true;
+
+                                }
+                            } catch (Exception e) { }
+                            break;
+                        case 3:
+                                try
+                                {
+                                    if (gameIntersections.ElementAt(index + ((GameButtons.Rows * 2) - 2)).IntersectionFill == opposite &&
+                                        gameIntersections.ElementAt(index + (GameButtons.Rows - 1)).IntersectionFill == opposite)
+                                    {
+                                        gameIntersections.ElementAt(index + ((GameButtons.Rows * 2) - 2)).IntersectionFill = Fill.Empty;
+                                        gameIntersections.ElementAt(index + (GameButtons.Rows - 1)).IntersectionFill = Fill.Empty;
+                                        capture = true;
+
+                                    }
+                                }
                                 catch (Exception e) { }
                                 break;
-                            case 1:
+                            case 4:
                                 try
                                 {
-                                    if (gameIntersections.ElementAt(index + (-GameButtons.Rows * 2)).IntersectionFill == opposite &&
-                                        gameIntersections.ElementAt(index + (-GameButtons.Rows)).IntersectionFill == opposite)
-                                    {
-                                        gameIntersections.ElementAt(index + (-GameButtons.Rows * 2)).IntersectionFill = Fill.Empty;
-                                        gameIntersections.ElementAt(index + (-GameButtons.Rows)).IntersectionFill = Fill.Empty;
-                                        capture = true;
-
-                                    }
-                                } catch(Exception e) { }
-                                break;
-                            case 2:
-                                try
-                                {
-                                    if (gameIntersections.ElementAt(index + ((-GameButtons.Rows * 2) + 2)).IntersectionFill == opposite &&
-                                        gameIntersections.ElementAt(index + (-GameButtons.Rows + 1)).IntersectionFill == opposite)
-                                    {
-                                        gameIntersections.ElementAt(index + ((-GameButtons.Rows * 2) + 2)).IntersectionFill = Fill.Empty;
-                                        gameIntersections.ElementAt(index + (-GameButtons.Rows + 1)).IntersectionFill = Fill.Empty;
-                                        capture = true;
-
-                                    }
-                                } catch (Exception e) { }
-                                break;
-                            case 3:
-                                    try
-                                    {
-                                        if (gameIntersections.ElementAt(index + ((GameButtons.Rows * 2) - 2)).IntersectionFill == opposite &&
-                                            gameIntersections.ElementAt(index + (GameButtons.Rows - 1)).IntersectionFill == opposite)
-                                        {
-                                            gameIntersections.ElementAt(index + ((GameButtons.Rows * 2) - 2)).IntersectionFill = Fill.Empty;
-                                            gameIntersections.ElementAt(index + (GameButtons.Rows - 1)).IntersectionFill = Fill.Empty;
-                                            capture = true;
-
-                                        }
-                                    }
-                                    catch (Exception e) { }
-                                    break;
-                                case 4:
-                                    try
+                                    if (gameIntersections.ElementAt(index + (GameButtons.Rows * 2)).IntersectionFill == opposite &&
+                                        gameIntersections.ElementAt(index + (GameButtons.Rows)).IntersectionFill == opposite)
                                     {
                                         gameIntersections.ElementAt(index + (GameButtons.Rows * 2)).IntersectionFill = Fill.Empty;
                                         gameIntersections.ElementAt(index + (GameButtons.Rows)).IntersectionFill = Fill.Empty;
                                         capture = true;
-
                                     }
-                                    catch (Exception e) { }
-                                    break;
-                                case 5:
-                                    try
+                                }
+                                catch (Exception e) { }
+                                break;
+                            case 5:
+                                try
+                                {
+                                    if (gameIntersections.ElementAt(index + (GameButtons.Rows * 2) + 2).IntersectionFill == opposite &&
+                                        gameIntersections.ElementAt(index + (GameButtons.Rows + 1)).IntersectionFill == opposite)
                                     {
                                         gameIntersections.ElementAt(index + ((GameButtons.Rows * 2) + 2)).IntersectionFill = Fill.Empty;
                                         gameIntersections.ElementAt(index + (GameButtons.Rows + 1)).IntersectionFill = Fill.Empty;
                                         capture = true;
-
                                     }
-                                    catch (Exception e) { }
-                                    break;
-                                case 6:
-                                    try
+                                }
+                                catch (Exception e) { }
+                                break;
+                            case 6:
+                                try
+                                {
+                                    if (gameIntersections.ElementAt(index + 2).IntersectionFill == opposite &&
+                                        gameIntersections.ElementAt(index + 1).IntersectionFill == opposite)
                                     {
                                         gameIntersections.ElementAt(index + 2).IntersectionFill = Fill.Empty;
                                         gameIntersections.ElementAt(index + 1).IntersectionFill = Fill.Empty;
                                         capture = true;
-
                                     }
-                                    catch (Exception e) { }
-                                    break;
-                                case 7:
-                                    try
+                                }
+                                catch (Exception e) { }
+                                break;
+                            case 7:
+                                try
+                                {
+                                    if (gameIntersections.ElementAt(index - 2).IntersectionFill == opposite &&
+                                        gameIntersections.ElementAt(index - 1).IntersectionFill == opposite)
                                     {
                                         gameIntersections.ElementAt(index - 2).IntersectionFill = Fill.Empty;
                                         gameIntersections.ElementAt(index - 1).IntersectionFill = Fill.Empty;
                                         capture = true;
-
                                     }
-                                    catch (Exception e) { }
-                                    break;
-                            }
+                                }
+                                catch (Exception e) { }
+                                break;
                         }
                     }
                 } catch(Exception e) { }
             }
-                    return capture;
+            return capture;
         }
         private void Save_Click(object sender, RoutedEventArgs e)
         {
