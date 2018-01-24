@@ -27,8 +27,6 @@ namespace PenteApplication
     {
         //finish straight like checks
         //make random AI
-        //20 second timer with pause
-        //show who's turn it is
         //make sure diagonal captures and tria/tessera work
         //Tournament rule for player 1
         //unit tests
@@ -42,18 +40,13 @@ namespace PenteApplication
         public List<List<Intersection>> gameIntersections2D;
         public Timer turnTimer;
         public int timerSec = 20;
-
         public List<List<int>> foundTria;
         public List<List<int>> foundTessera;
         public bool P1Turn = false;
         public MainWindow()
         {
             InitializeComponent();
-            turnTimer = new Timer();
-            turnTimer.BeginInit();
-            turnTimer.Interval = 1000;
-            turnTimer.Elapsed += timer_tick;
-            turnTimer.Enabled = true;
+            
         }
 
         //Jordon and Collin
@@ -68,24 +61,42 @@ namespace PenteApplication
             b.Opacity = 1;
             b.Style = (Style)Application.Current.Resources["MyButtonStyle"];
             lblPlayer.Content = Player2Name + "'s turn";
-            turnTimer.Start();
+            turnTimer = new Timer();
+            //turnTimer.BeginInit();
+            //turnTimer.Enabled = true;
+            turnTimer.Interval = 1000;
+            turnTimer.Elapsed += timer_tick;
+            
         }
-        public void timer_tick(object sender, ElapsedEventArgs e)
+        public void timer_tick(Object sender, ElapsedEventArgs e)
         {
-            timerSec--;
-            if(timerSec == 0)
+            TimerMethod();
+        }
+        public void TimerMethod()
+        {
+            this.Dispatcher.Invoke(() =>
             {
-                P1Turn = !P1Turn;
-                if (P1Turn)
+                if (timerSec < 0)
                 {
-                    lblPlayer.Content = Player1Name + "'s turn";
+                    P1Turn = !P1Turn;
+                    if (P1Turn)
+                    {
+                        lblPlayer.Content = Player1Name + "'s turn";
+                    }
+                    else
+                    {
+                        lblPlayer.Content = Player2Name + "'s turn";
+                    }
+                    turnTimer.Stop();
+                    MessageBoxResult result = MessageBox.Show("Your turn has been skipped :/");
+                    timerSec = 20;
+                    turnTimer.Start();
                 }
-                else
-                {
-                    lblPlayer.Content = Player2Name + "'s turn";
-                }
-            }
-            lblTimer.Content = timerSec.ToString();
+
+                lblTimer.Content = timerSec.ToString();
+            });
+            timerSec--;
+            
         }
         //Jordon and Collin
         public int FillGameGrid(int size)
@@ -124,7 +135,6 @@ namespace PenteApplication
                     intersection.SetBinding(Button.BackgroundProperty, b);
                     intersection.Click += PlaceStone_Click;
                     gameIntersections.Add(inter);
-                    intersection.Content = j + ", " + i;
                     GameButtons.Children.Add(intersection);
                 }
                 
@@ -177,6 +187,7 @@ namespace PenteApplication
             NamePlayer.Visibility = Visibility.Hidden;
             PlayGame.Visibility = Visibility.Visible;
             PlaceFirst();
+            turnTimer.Start();
         }
         //Austin and Jarrett
         public void Player1Naming(string playerName)
@@ -189,7 +200,7 @@ namespace PenteApplication
             {
                 Player1Name = playerName;
             }
-            lblP1Captures.Content = playerName + "'s captures:";
+            lblP1Captures.Content = Player1Name + "'s captures:";
         }
         //Collin and Jordon
         public void PlaceStone_Click(object sender, RoutedEventArgs e)
@@ -226,6 +237,7 @@ namespace PenteApplication
                     lblPlayer.Content = Player2Name + "'s turn";
                 }
                 P1Turn = !P1Turn;
+                timerSec = 20;
             }
         }
 
