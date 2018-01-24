@@ -430,7 +430,6 @@ namespace PenteApplication
                     catch (Exception e) { }
                 }
             });
-            return tria;
         }
         //Collin and Jordon
         public bool CheckForCapture(int index)
@@ -477,7 +476,7 @@ namespace PenteApplication
                                         gameIntersections.ElementAt(index + (-GameButtons.Rows - 1)).IntersectionFill = Fill.Empty;
                                         capture = true;
                                     }
-                                } catch (Exception e) { }
+                                catch (Exception e) { }
                                 break;
                             case 1:
                                 try
@@ -506,15 +505,16 @@ namespace PenteApplication
                                 } catch (Exception e) { }
                                 break;
                             case 3:
-                                try
-                                {
-                                    if (gameIntersections.ElementAt(index + ((GameButtons.Rows * 2) - 2)).IntersectionFill == opposite &&
-                                        gameIntersections.ElementAt(index + (GameButtons.Rows - 1)).IntersectionFill == opposite)
+                                    try
                                     {
-                                        gameIntersections.ElementAt(index + ((GameButtons.Rows * 2) - 2)).IntersectionFill = Fill.Empty;
-                                        gameIntersections.ElementAt(index + (GameButtons.Rows - 1)).IntersectionFill = Fill.Empty;
-                                        capture = true;
+                                        if (gameIntersections.ElementAt(index + ((GameButtons.Rows * 2) - 2)).IntersectionFill == opposite &&
+                                            gameIntersections.ElementAt(index + (GameButtons.Rows - 1)).IntersectionFill == opposite)
+                                        {
+                                            gameIntersections.ElementAt(index + ((GameButtons.Rows * 2) - 2)).IntersectionFill = Fill.Empty;
+                                            gameIntersections.ElementAt(index + (GameButtons.Rows - 1)).IntersectionFill = Fill.Empty;
+                                            capture = true;
 
+                                        }
                                     }
                                     catch (Exception e) { }
                                     break;
