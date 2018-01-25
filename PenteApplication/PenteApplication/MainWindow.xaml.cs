@@ -29,6 +29,8 @@ namespace PenteApplication
         //unit tests
         //play again
         //save/load
+        int cputimerSec = 2;
+        int LoadSize;
         public string Player1Name;
         public string Player2Name;
         public bool pvp = false;
@@ -67,9 +69,12 @@ namespace PenteApplication
             //turnTimer.Enabled = true;
             turnTimer.Interval = 1000;
             turnTimer.Elapsed += timer_tick;
+            CPUTimer = new Timer();
+            CPUTimer.Interval = 1000;
+            CPUTimer.Elapsed += CPUtimer_tick;
             if (!pvp)
             {
-                AI_Turn();
+                CPUTimer.Start();
             }
         }
         //Jordon and Collin
@@ -99,7 +104,7 @@ namespace PenteApplication
                     turnTimer.Start();
                     if (!pvp)
                     {
-                        AI_Turn();
+                        CPUTimer.Start();
                     }
                 }
 
@@ -261,8 +266,7 @@ namespace PenteApplication
             timerSec = 20;
             if (!pvp && !P1Turn)
             {
-                AI_Turn();
-                P1Turn = true;
+                CPUTimer.Start();
             }
         }
         //Collin and Jordon
@@ -1016,15 +1020,16 @@ namespace PenteApplication
         }
         //Austin and Jarrett
         public void CPUTimerMethod()
-        {
-            int cputimerSec = 0;
-            CPUTimer = new Timer();
-            CPUTimer.Interval = 1000;
-            CPUTimer.Elapsed += CPUtimer_tick;
+        {            
             this.Dispatcher.Invoke(() =>
             {
-                cputimerSec = 2;
-                turnTimer.Start();
+                if (cputimerSec == 0 && !P1Turn)
+                {
+                    CPUTimer.Stop();
+                    cputimerSec = 2;
+                    AI_Turn();
+                    P1Turn = true;
+                }
             });
             cputimerSec--;
         }
@@ -1063,8 +1068,14 @@ namespace PenteApplication
             s.Filter = ".pnt | Pente";
             s.ShowDialog();
             IFormatter format = new BinaryFormatter();
-            Stream slip = new FileStream(s.FileName, FileMode.Create, FileAccess.Write, FileShare.None);
-            //format.Serialize(slip, );
+            Stream slip = new FileStream(s.FileName, FileMode.Append, FileAccess.Write, FileShare.None);
+            format.Serialize(slip, gameIntersections);
+            //format.Serialize(slip, Player1Name);
+            //format.Serialize(slip, Player2Name);
+            //format.Serialize(slip, P1Cap);
+            //format.Serialize(slip, P2Cap);
+            //format.Serialize(slip, P1Turn);
+
         }
         private void SaveAs_Click(object sender, RoutedEventArgs e)
         {
@@ -1082,7 +1093,12 @@ namespace PenteApplication
             o.ShowDialog();
             IFormatter format = new BinaryFormatter();
             Stream slip = new FileStream(o.FileName, FileMode.Open);
-            //people = ()format.Deserialize(slip);
+            gameIntersections = new List<Intersection>();
+            gameIntersections = (List<Intersection>)format.Deserialize(slip);
+            LoadSize = ((int)Math.Sqrt(gameIntersections.Count())) - 1;
+            //GameButtons.Children.Clear();
+            //Gameboard.Children.Clear();
+            FillGameGrid(LoadSize);
         }
     }
 } 

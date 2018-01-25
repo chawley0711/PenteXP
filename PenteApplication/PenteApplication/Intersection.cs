@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace PenteApplication
 {
+    [Serializable]
     public class Intersection : INotifyPropertyChanged
     {
         public Intersection()
