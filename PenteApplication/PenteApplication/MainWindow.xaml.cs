@@ -156,6 +156,11 @@ namespace PenteApplication
             return Gameboard.Columns;
         }
         //Austin and Jarrett
+        /// <summary>
+        /// Hides the main menu, shows the naming menu, and sets PVP to true
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void PvPButton_Click(object sender, RoutedEventArgs e)
         {
             pvp = true;
@@ -163,6 +168,11 @@ namespace PenteApplication
             NamePlayer.Visibility = Visibility.Visible;
         }
         //Austin and Jarrett
+        /// <summary>
+        /// Hides the main menu, shows the naming menu, and keeps PVP set to false
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void PvCButton_Click(object sender, RoutedEventArgs e)
         {
             MainMenu.Visibility = Visibility.Hidden;
@@ -170,14 +180,19 @@ namespace PenteApplication
             NamePlayer.Visibility = Visibility.Visible;            
         }
         //Austin and Jarrett
+        /// <summary>
+        /// Calls the naming method for each player, even if the player is a computer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void PlayerSubmitButton_Click(object sender, RoutedEventArgs e)
         {
             FillGameGrid((int)BoardSizeSlider.Value - 1);
-            string tempName1 = Player1NameTextBox.Text;
+            string tempName1 = Player1NameTextBox.Text.Trim();
             Player1Naming(tempName1);
             if(pvp)
             {
-                string tempName2 = Player2NameTextBox.Text;
+                string tempName2 = Player2NameTextBox.Text.Trim();
                 Player2Naming(tempName2);
             }
             else
@@ -187,9 +202,16 @@ namespace PenteApplication
             }
         }
         //Austin and Jarrett
+        /// <summary>
+        /// If the string passed in equal null or empty, the name defaults to "Player 2". Otherwise Player Two's name gets set to the name passed in.
+        /// Sets the content of Player Two's capture label to the player name plus "'s captures:".
+        /// Hides the naming menu and shows the game itself.
+        /// Calls the PlaceFirst method as well as the Start method on the turnTimer.
+        /// </summary>
+        /// <param name="playerName">The name that was taken from the Player Two text box in the naming menu</param>
         public void Player2Naming(string playerName)
         {
-            if (playerName.Equals(""))
+            if (playerName.Equals(null) || playerName.Equals(""))
             {
                 Player2Name = "Player 2";
             }
@@ -204,9 +226,14 @@ namespace PenteApplication
             turnTimer.Start();
         }
         //Austin and Jarrett
+        /// <summary>
+        /// If the string passed in equal null or empty, the name defaults to "Player 1". Otherwise Player One's name gets set to the name passed in.
+        /// Sets the content of Player One's capture label to the player name plus "'s captures:".
+        /// </summary>
+        /// <param name="playerName">The name that was taken from the Player One text box in the naming menu</param>
         public void Player1Naming(string playerName)
         {
-            if (playerName.Equals(""))
+            if (playerName.Equals(null) || playerName.Equals(""))
             {
                 Player1Name = "Player 1";
             }
@@ -1019,6 +1046,9 @@ namespace PenteApplication
             return capture;
         }
         //Austin and Jarrett
+        /// <summary>
+        /// Makes the computer take its turn after two seconds have passed. Thus allowing any necessary information to be made available to the User
+        /// </summary>
         public void CPUTimerMethod()
         {            
             this.Dispatcher.Invoke(() =>
@@ -1034,11 +1064,21 @@ namespace PenteApplication
             cputimerSec--;
         }
         //Austin and Jarrett
+        /// <summary>
+        /// The event handler for the CPUTimerMethod method
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void CPUtimer_tick(Object sender, ElapsedEventArgs e)
         {
             CPUTimerMethod();
         }
         //Austin and Jarrett
+        /// <summary>
+        /// Chooses a random number between 0 and the size of the board.
+        /// Flips the intersection's button at the random number.
+        /// If an invalid number is chosen, meaning a piece already exists there, it does the whole thing again.
+        /// </summary>
         public void AI_Turn()
         {
             int maxVal = (int)BoardSizeSlider.Value * (int)BoardSizeSlider.Value;
