@@ -25,7 +25,7 @@ namespace PenteApplication
     /// </summary>
     public partial class MainWindow : Window
     {
-        //display only new tria/tessera (check all current tria, compare to found, if less, remove the one not found, if more, add the one found and display, if same, do nothing)
+        //put comments on all methods with descriptions
         //unit tests
         //play again
         //save/load
@@ -593,7 +593,7 @@ namespace PenteApplication
             }
             return found;
         }
-
+        //Collin and Jordon
         public bool EqualLists(List<int> main, List<int> other)
         {
             bool equal = true;
