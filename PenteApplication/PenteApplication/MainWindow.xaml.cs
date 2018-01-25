@@ -36,11 +36,10 @@ namespace PenteApplication
         public string Player2Name;
         public bool pvp = false;
         public string CpuName = "GOD";
-        public List<Intersection> gameIntersections = new List<Intersection>();
-        public List<List<Intersection>> gameIntersections2D;
         public Timer turnTimer;
         public Timer CPUTimer;
         public int timerSec = 20;
+        public List<Intersection> gameIntersections;
         public List<List<int>> foundBlackTria = new List<List<int>>();
         public List<List<int>> foundBlackTessera = new List<List<int>>();
         public List<List<int>> foundWhiteTria = new List<List<int>>();
@@ -55,6 +54,7 @@ namespace PenteApplication
             
         }
         //Jordon and Collin
+        //Places the first piece in the middle of the board
         public void PlaceFirst()
         {
             int index = (GameButtons.Rows * GameButtons.Columns) / 2;
@@ -79,16 +79,18 @@ namespace PenteApplication
             }
         }
         //Jordon and Collin
+        //Calls the timer method
         public void timer_tick(Object sender, ElapsedEventArgs e)
         {
             TimerMethod();
         }
         //Collin and Jordon
+        //If timer reaches 0, switch turns and alert player they have been skipped
         public void TimerMethod()
         {
             this.Dispatcher.Invoke(() =>
             {
-                if (timerSec < 0)
+                if (timerSec <= 0)
                 {
                     P1Turn = !P1Turn;
                     if (P1Turn)
@@ -103,19 +105,33 @@ namespace PenteApplication
                     MessageBoxResult result = MessageBox.Show("Your turn has been skipped, ran out of time. :/");
                     timerSec = 20;
                     turnTimer.Start();
-                    if (!pvp)
-                    {
-                        CPUTimer.Start();
-                    }
+                    //if (!pvp)
+                    //{
+                    //    CPUTimer.Start();
+                    //}
                 }
-
                 lblTimer.Content = timerSec.ToString();
             });
             timerSec--;
         }
         //Jordon and Collin
+        // sets up the board of buttons 
         public int FillGameGrid(int size)
-        {            
+        {
+            Gameboard.Children.Clear();
+            GameButtons.Children.Clear();
+            foundBlackTria = new List<List<int>>();
+            foundBlackTessera = new List<List<int>>();
+            foundWhiteTria = new List<List<int>>();
+            foundWhiteTessera = new List<List<int>>();
+            P1Turn = false;
+            timerSec = 20;
+            cputimerSec = 2;
+            
+            P1Cap = 0;
+            P2Cap = 0;
+            firstPlacement = true;
+            gameIntersections = new List<Intersection>();
             Gameboard.Rows = size;
             Gameboard.Columns = size;
             GameButtons.Rows = size + 1;
@@ -153,6 +169,9 @@ namespace PenteApplication
                 }
                 
             }
+            PlaceFirst();
+            turnTimer.Start();
+            CPUTimer.Start();
             return Gameboard.Columns;
         }
         //Austin and Jarrett
@@ -272,8 +291,6 @@ namespace PenteApplication
             lblP2Captures.Content = playerName + "'s captures:";
             NamePlayer.Visibility = Visibility.Hidden;
             PlayGame.Visibility = Visibility.Visible;
-            PlaceFirst();
-            turnTimer.Start();
         }
         //Austin and Jarrett
         /// <summary>
@@ -294,6 +311,7 @@ namespace PenteApplication
             lblP1Captures.Content = Player1Name + "'s captures:";
         }
         //Jordon and Collin
+        //Flips the empty button to the appropriate player color
         public void flip(Button b, Intersection i, int index)
         {
             AnnouncementPlayerLabel.Visibility = Visibility.Hidden;
@@ -347,6 +365,7 @@ namespace PenteApplication
             }
         }
         //Collin and Jordon
+        //Calls the flip method on click, also checks that they can place where they clicked, tournament rule check
         public void PlaceStone_Click(object sender, RoutedEventArgs e)
         {
             Button b = (Button)sender;
@@ -379,11 +398,15 @@ namespace PenteApplication
                 }
                 else
                 {
-                    flip(b, i, index);
+                    if (pvp)
+                    {
+                        flip(b, i, index);
+                    }
                 }
             }
         }
         //Jordon and Collin
+        //Checks the number of captures as well as 5 pieces in a row
         public bool CheckForWin(Fill color)
         {
             bool found = false;
@@ -420,18 +443,38 @@ namespace PenteApplication
             {
                 if(P1Cap == 5)
                 {
-                    MessageBoxResult result = MessageBox.Show(Player1Name + " wins!");
-                    found = true;
-                    //end game
+                    if (MessageBox.Show(Player1Name + " has won. Play again?", "Winner!", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                    {
+                        this.Close();
+                    }
+                    else
+                    {
+                        turnTimer.Stop();
+                        CPUTimer.Stop();
+                        AnnouncementConstantLabel.Visibility = Visibility.Hidden;
+                        AnnouncementPlayerLabel.Visibility = Visibility.Hidden;
+                        AnnouncementTypeLabel.Visibility = Visibility.Hidden;
+                        FillGameGrid((int)BoardSizeSlider.Value - 1);
+                    }
                 }
             }
             else
             {
                 if (P2Cap == 5)
                 {
-                    MessageBoxResult result = MessageBox.Show(Player2Name + " wins!");
-                    found = true;
-                    //end game
+                    if (MessageBox.Show(Player2Name + " has won. Play again?", "Winner!", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                    {
+                        this.Close();
+                    }
+                    else
+                    {
+                        turnTimer.Stop();
+                        CPUTimer.Stop();
+                        AnnouncementConstantLabel.Visibility = Visibility.Hidden;
+                        AnnouncementPlayerLabel.Visibility = Visibility.Hidden;
+                        AnnouncementTypeLabel.Visibility = Visibility.Hidden;
+                        FillGameGrid((int)BoardSizeSlider.Value - 1);
+                    }
                 }
             }
 
@@ -470,19 +513,38 @@ namespace PenteApplication
                             {
                                 if (color == Fill.White)
                                 {
-                                    MessageBoxResult result = MessageBox.Show(Player2Name + " wins!");
-                                    //end game
+                                    if (MessageBox.Show(Player2Name + " has won. Play again?", "Winner!", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                                    {
+                                        this.Close();
+                                    }
+                                    else
+                                    {
+                                        turnTimer.Stop();
+                                        CPUTimer.Stop();
+                                        AnnouncementConstantLabel.Visibility = Visibility.Hidden;
+                                        AnnouncementPlayerLabel.Visibility = Visibility.Hidden;
+                                        AnnouncementTypeLabel.Visibility = Visibility.Hidden;
+                                        FillGameGrid((int)BoardSizeSlider.Value - 1);
+                                    }
                                 }
                                 else
                                 {
-                                    MessageBoxResult result = MessageBox.Show(Player1Name + " wins!");
-                                    //end game
+                                    if (MessageBox.Show(Player1Name + " has won. Play again?", "Winner!", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                                    {
+                                        this.Close();
+                                    }
+                                    else
+                                    {
+                                        turnTimer.Stop();
+                                        CPUTimer.Stop();
+                                        AnnouncementConstantLabel.Visibility = Visibility.Hidden;
+                                        AnnouncementPlayerLabel.Visibility = Visibility.Hidden;
+                                        AnnouncementTypeLabel.Visibility = Visibility.Hidden;
+                                        P1Turn = false;
+                                        FillGameGrid((int)BoardSizeSlider.Value - 1);
+                                    }
                                 }
                                 found = true;
-                                AnnouncementTypeLabel.Content = "Tessera";
-                                AnnouncementPlayerLabel.Visibility = Visibility.Visible;
-                                AnnouncementConstantLabel.Visibility = Visibility.Visible;
-                                AnnouncementTypeLabel.Visibility = Visibility.Visible;
                             }
                         }
                     }
@@ -492,6 +554,7 @@ namespace PenteApplication
             return found;
         }
         //Collin and Jordon
+        //Checks the whole board for tesseras
         public bool CheckForTessera(Fill color)
         {
             List<int> intersections = gameIntersections.Where(x => x.IntersectionFill == color).Select(y => gameIntersections.IndexOf(y)).ToList();
@@ -583,6 +646,7 @@ namespace PenteApplication
             return CheckCurrentAndFoundTessera(current, color);
         }
         //Jordon and Collin
+        //Checks the board and compares tesseras to the ones found on the last run
         public bool CheckCurrentAndFoundTessera(List<List<int>> current, Fill color)
         {
             bool found = false;
@@ -617,7 +681,7 @@ namespace PenteApplication
                             }
                         }
                     }
-                    if (equalCount != foundWhiteTessera.Count && equalCount != 0)
+                    if (equalCount != foundWhiteTessera.Count && equalCount != 0 && current.Count != 0 && foundWhiteTessera.Count !=0)
                     {
                         foundWhiteTessera.Add(current[notEqual]);
                         found = true;
@@ -660,7 +724,7 @@ namespace PenteApplication
                             }
                         }
                     }
-                    if (equalCount != foundBlackTessera.Count && equalCount != 0)
+                    if (equalCount != foundBlackTessera.Count && equalCount != 0 && current.Count != 0 && foundBlackTessera.Count != 0)
                     {
                         foundBlackTessera.Add(current[notEqual]);
                         found = true;
@@ -675,6 +739,7 @@ namespace PenteApplication
             return found;
         }
         //Collin and Jordon
+        //Checks if the found list and previous list of tesseras are equal
         public bool EqualLists(List<int> main, List<int> other)
         {
             bool equal = true;
@@ -695,6 +760,7 @@ namespace PenteApplication
             return equal;
         }
         //Collin and Jordon
+        //Checks board for trias
         public void CheckForTria(Fill color)
         {
             List<int> intersections = gameIntersections.Where(x => x.IntersectionFill == color).Select(y => gameIntersections.IndexOf(y)).ToList();
@@ -776,6 +842,7 @@ namespace PenteApplication
             CheckCurrentAndFoundTria(current, color);
         }
         //Collin and Jordon
+        //Checks the board and compares trias to the ones found on the last run
         public void CheckCurrentAndFoundTria(List<List<int>> current, Fill color)
         {
             if (color == Fill.White)
@@ -808,7 +875,7 @@ namespace PenteApplication
                             }
                         }
                     }
-                    if (equalCount != foundWhiteTria.Count && equalCount != 0)
+                    if (equalCount != foundWhiteTria.Count && equalCount != 0 && current.Count != 0 && foundWhiteTria.Count != 0)
                     {
                         foundWhiteTria.Add(current[notEqual]);
                         AnnouncementTypeLabel.Content = "Tria";
@@ -849,7 +916,7 @@ namespace PenteApplication
                             }
                         }
                     }
-                    if (equalCount != foundBlackTria.Count && equalCount != 0)
+                    if (equalCount != foundBlackTria.Count && equalCount != 0 && current.Count != 0 && foundBlackTria.Count != 0)
                     {
                         foundBlackTria.Add(current[notEqual]);
                         AnnouncementTypeLabel.Content = "Tria";
@@ -862,6 +929,7 @@ namespace PenteApplication
             }
         }
         //Collin and Jordon
+        //Checks for captures
         public bool CheckForCapture(int index)
         {
             bool capture = false;
