@@ -32,7 +32,7 @@ namespace PenteApplication
         //save/load
         public string Player1Name;
         public string Player2Name;
-        public bool pvp;
+        public bool pvp = false;
         public string CpuName = "GOD";
         public List<Intersection> gameIntersections;
         public List<List<Intersection>> gameIntersections2D;
@@ -67,7 +67,10 @@ namespace PenteApplication
             //turnTimer.Enabled = true;
             turnTimer.Interval = 1000;
             turnTimer.Elapsed += timer_tick;
-            
+            if (!pvp)
+            {
+                AI_Turn();
+            }
         }
         //Jordon and Collin
         public void timer_tick(Object sender, ElapsedEventArgs e)
@@ -252,6 +255,11 @@ namespace PenteApplication
             }
             P1Turn = !P1Turn;
             timerSec = 20;
+            if (!pvp && !P1Turn)
+            {
+                AI_Turn();
+                P1Turn = true;
+            }
         }
         //Collin and Jordon
         public void PlaceStone_Click(object sender, RoutedEventArgs e)
@@ -888,6 +896,30 @@ namespace PenteApplication
             lblP1Captures.Content = "P1 Captures: " + P1Cap;
             lblP2Captures.Content = "P2 Captures: " + P2Cap;
             return capture;
+        }
+        //Austin and Jarrett
+        public void AI_Turn()
+        {
+            int maxVal = (int)BoardSizeSlider.Value * (int)BoardSizeSlider.Value;
+            bool isValid;
+
+            do
+            {
+                isValid = true;
+                Random rand = new Random();
+                int randNum = rand.Next(maxVal);
+
+                if (gameIntersections[randNum].IntersectionFill == Fill.Empty)
+                {
+                    Button b = (Button)GameButtons.Children[randNum];
+                    Intersection i = (Intersection)b.DataContext;
+                    flip(b, i, randNum);
+                }
+                else
+                {
+                    isValid = false;
+                }
+            } while (!isValid);
         }
         private void Save_Click(object sender, RoutedEventArgs e)
         {
