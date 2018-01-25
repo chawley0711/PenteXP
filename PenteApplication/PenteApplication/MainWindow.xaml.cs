@@ -25,7 +25,6 @@ namespace PenteApplication
     /// </summary>
     public partial class MainWindow : Window
     {
-        //make random AI
         //display only new tria/tessera (check all current tria, compare to found, if less, remove the one not found, if more, add the one found and display, if same, do nothing)
         //unit tests
         //play again
@@ -37,6 +36,7 @@ namespace PenteApplication
         public List<Intersection> gameIntersections;
         public List<List<Intersection>> gameIntersections2D;
         public Timer turnTimer;
+        public Timer CPUTimer;
         public int timerSec = 20;
         public List<List<int>> foundBlackTria = new List<List<int>>();
         public List<List<int>> foundBlackTessera = new List<List<int>>();
@@ -97,12 +97,15 @@ namespace PenteApplication
                     MessageBoxResult result = MessageBox.Show("Your turn has been skipped, ran out of time. :/");
                     timerSec = 20;
                     turnTimer.Start();
+                    if (!pvp)
+                    {
+                        AI_Turn();
+                    }
                 }
 
                 lblTimer.Content = timerSec.ToString();
             });
             timerSec--;
-            
         }
         //Jordon and Collin
         public int FillGameGrid(int size)
@@ -896,6 +899,25 @@ namespace PenteApplication
             lblP1Captures.Content = "P1 Captures: " + P1Cap;
             lblP2Captures.Content = "P2 Captures: " + P2Cap;
             return capture;
+        }
+        //Austin and Jarrett
+        public void CPUTimerMethod()
+        {
+            int cputimerSec = 0;
+            CPUTimer = new Timer();
+            CPUTimer.Interval = 1000;
+            CPUTimer.Elapsed += CPUtimer_tick;
+            this.Dispatcher.Invoke(() =>
+            {
+                cputimerSec = 2;
+                turnTimer.Start();
+            });
+            cputimerSec--;
+        }
+        //Austin and Jarrett
+        public void CPUtimer_tick(Object sender, ElapsedEventArgs e)
+        {
+            CPUTimerMethod();
         }
         //Austin and Jarrett
         public void AI_Turn()
