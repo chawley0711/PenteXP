@@ -211,6 +211,7 @@ namespace PenteApplication
             }
             lblP1Captures.Content = Player1Name + "'s captures:";
         }
+        //Jordon and Collin
         public void flip(Button b, Intersection i, int index)
         {
             AnnouncementPlayerLabel.Visibility = Visibility.Hidden;
@@ -474,20 +475,16 @@ namespace PenteApplication
 
                             if ((col2 == col1 &&
                             col3 == col1 &&
-                            col4 == col1 &&
-                            col5 == col1) ||
+                            col4 == col1) ||
                             (row2 == row1 &&
                             row3 == row1 &&
-                            row4 == row1 &&
-                            row5 == row1) ||
-                            ((row2 + 1 == row1 && col2 - 1 == col1) &&
-                            (row3 + 2 == row1 && col3 - 2 == col1) &&
-                            (row4 + 3 == row1 && col4 - 3 == col1) &&
-                            (row5 + 4 == row1 && col5 - 5 == col1)) ||
-                            ((row2 + 1 == row1 && col2 + 1 == col1) &&
-                            (row3 + 2 == row1 && col3 + 2 == col1) &&
-                            (row4 + 3 == row1 && col4 + 3 == col1) &&
-                            (row5 + 4 == row1 && col5 + 4 == col1)))
+                            row4 == row1) ||
+                            ((row2 - 1 == row1 && col2 - 1 == col1) &&
+                            (row3 - 2 == row1 && col3 - 2 == col1) &&
+                            (row4 - 3 == row1 && col4 - 3 == col1)) ||
+                            ((row2 - 1 == row1 && col2 + 1 == col1) &&
+                            (row3 - 2 == row1 && col3 + 2 == col1) &&
+                            (row4 - 3 == row1 && col4 + 3 == col1)))
                             {
                                 current.Add(new List<int>()
                                 {
@@ -502,63 +499,126 @@ namespace PenteApplication
                     catch (Exception e) { }
                 }
             });
-            return CheckCurrentAndFound(current, color);
+            return CheckCurrentAndFoundTessera(current, color);
         }
-        public bool CheckCurrentAndFound(List<List<int>> current, Fill color)
+        //Jordon and Collin
+        public bool CheckCurrentAndFoundTessera(List<List<int>> current, Fill color)
         {
             bool found = false;
             if (color == Fill.White)
             {
-                foreach (List<int> tess in current)
+                if (foundWhiteTessera.Count > current.Count)
                 {
-                    if (!foundWhiteTessera.Contains(tess)) //ask mr. krebs why
+                    foundWhiteTessera = current;
+                }
+                else if (foundWhiteTessera.Count < current.Count)
+                {
+                    foundWhiteTessera.Add(current[current.Count - 1]);
+                    found = true;
+                    AnnouncementTypeLabel.Content = "Tessera";
+                    AnnouncementPlayerLabel.Content = Player2Name;
+                    AnnouncementPlayerLabel.Visibility = Visibility.Visible;
+                    AnnouncementConstantLabel.Visibility = Visibility.Visible;
+                    AnnouncementTypeLabel.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    int notEqual = -1;
+                    int equalCount = 0;
+                    for (int j = 0; j < current.Count; j++)
                     {
-                        foundWhiteTessera.Add(tess);
+                        for (int i = 0; i < current.Count; i++)
+                        {
+                            if (EqualLists(foundWhiteTessera[j], current[i]))
+                            {
+                                equalCount++;
+                                notEqual = i;
+                            }
+                        }
+                    }
+                    if (equalCount != foundWhiteTessera.Count && equalCount != 0)
+                    {
+                        foundWhiteTessera.Add(current[notEqual]);
                         found = true;
                         AnnouncementTypeLabel.Content = "Tessera";
+                        AnnouncementPlayerLabel.Content = Player2Name;
                         AnnouncementPlayerLabel.Visibility = Visibility.Visible;
                         AnnouncementConstantLabel.Visibility = Visibility.Visible;
                         AnnouncementTypeLabel.Visibility = Visibility.Visible;
-                    }
-                }
-                foreach (List<int> tess in foundWhiteTessera)
-                {
-                    if (!current.Contains(tess))
-                    {
-                        foundWhiteTessera.Remove(tess);
                     }
                 }
             }
             else
             {
-                foreach (List<int> tess in current)
+                if(foundBlackTessera.Count > current.Count)
                 {
-                    if (!foundBlackTessera.Contains(tess))
+                    foundBlackTessera = current;
+                }
+                else if(foundBlackTessera.Count < current.Count)
+                {
+                    foundBlackTessera.Add(current[current.Count - 1]);
+                    found = true;
+                    AnnouncementTypeLabel.Content = "Tessera";
+                    AnnouncementPlayerLabel.Content = Player1Name;
+                    AnnouncementPlayerLabel.Visibility = Visibility.Visible;
+                    AnnouncementConstantLabel.Visibility = Visibility.Visible;
+                    AnnouncementTypeLabel.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    int notEqual = -1;
+                    int equalCount = 0;
+                    for(int j = 0; j < current.Count; j++)
                     {
-                        foundBlackTessera.Add(tess);
+                        for (int i = 0; i < current.Count; i++)
+                        {
+                            if (EqualLists(foundBlackTessera[j], current[i]))
+                            {
+                                equalCount++;
+                                notEqual = i;
+                            }
+                        }
+                    }
+                    if (equalCount != foundBlackTessera.Count && equalCount != 0)
+                    {
+                        foundBlackTessera.Add(current[notEqual]);
                         found = true;
                         AnnouncementTypeLabel.Content = "Tessera";
+                        AnnouncementPlayerLabel.Content = Player1Name;
                         AnnouncementPlayerLabel.Visibility = Visibility.Visible;
                         AnnouncementConstantLabel.Visibility = Visibility.Visible;
                         AnnouncementTypeLabel.Visibility = Visibility.Visible;
                     }
                 }
-                foreach (List<int> tess in foundBlackTessera)
+            }
+            return found;
+        }
+
+        public bool EqualLists(List<int> main, List<int> other)
+        {
+            bool equal = true;
+            if(main.Count == other.Count)
+            {
+                for(int i = 0; i < main.Count; i++)
                 {
-                    if (!current.Contains(tess))
+                    if(main[i] != other[i])
                     {
-                        foundBlackTessera.Remove(tess);
+                        equal = false;
                     }
                 }
             }
-            return found;
+            else
+            {
+                equal = false;
+            }
+            return equal;
         }
         //Collin and Jordon
         public void CheckForTria(Fill color)
         {
             List<int> intersections = gameIntersections.Where(x => x.IntersectionFill == color).Select(y => gameIntersections.IndexOf(y)).ToList();
+            List<List<int>> current = new List<List<int>>();
             List<List<int>> math = new List<List<int>>()
-            
             {
                 new List<int>() {
                    GameButtons.Columns - 1,
@@ -619,52 +679,106 @@ namespace PenteApplication
                             (row3 + 2 == row1 && col3 + 2 == col1) &&
                             (row4 + 3 == row1 && col4 + 3 == col1)))
                             {
-                                if (color == Fill.White)
+                                current.Add(new List<int>()
                                 {
-                                    if (!foundWhiteTria.Contains(new List<int>()
-                                    {
-                                        x,
-                                        (x + math[i][0]),
-                                        (x + math[i][1])
-                                    }))
-                                    {
-                                        AnnouncementPlayerLabel.Content = Player2Name;
-                                        foundWhiteTria.Add(new List<int>()
-                                        {
-                                            x,
-                                            (x + math[i][0]),
-                                            (x + math[i][1])
-                                        });
-                                    }
-                                }
-                                else
-                                {
-                                    if (!foundWhiteTria.Contains(new List<int>()
-                                    {
-                                        x,
-                                        (x + math[i][0]),
-                                        (x + math[i][1])
-                                    }))
-                                    {
-                                        AnnouncementPlayerLabel.Content = Player1Name;
-                                        foundBlackTria.Add(new List<int>()
-                                        {
-                                            x,
-                                            (x + math[i][0]),
-                                            (x + math[i][1])
-                                        });
-                                    }
-                                }
-                                AnnouncementTypeLabel.Content = "Tria";
-                                AnnouncementPlayerLabel.Visibility = Visibility.Visible;
-                                AnnouncementConstantLabel.Visibility = Visibility.Visible;
-                                AnnouncementTypeLabel.Visibility = Visibility.Visible;
+                                    x,
+                                    (x + math[i][0]),
+                                    (x + math[i][1]),
+                                    (x + math[i][2])
+                                });
                             }
                         }
                     }
                     catch (Exception e) { }
                 }
             });
+            CheckCurrentAndFoundTria(current, color);
+        }
+        //Collin and Jordon
+        public void CheckCurrentAndFoundTria(List<List<int>> current, Fill color)
+        {
+            if (color == Fill.White)
+            {
+                if (foundWhiteTria.Count > current.Count)
+                {
+                    foundWhiteTria = current;
+                }
+                else if (foundWhiteTria.Count < current.Count)
+                {
+                    foundWhiteTria.Add(current[current.Count - 1]);
+                    AnnouncementTypeLabel.Content = "Tria";
+                    AnnouncementPlayerLabel.Content = Player2Name;
+                    AnnouncementPlayerLabel.Visibility = Visibility.Visible;
+                    AnnouncementConstantLabel.Visibility = Visibility.Visible;
+                    AnnouncementTypeLabel.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    int notEqual = -1;
+                    int equalCount = 0;
+                    for (int j = 0; j < current.Count; j++)
+                    {
+                        for (int i = 0; i < current.Count; i++)
+                        {
+                            if (EqualLists(foundWhiteTria[j], current[i]))
+                            {
+                                equalCount++;
+                                notEqual = i;
+                            }
+                        }
+                    }
+                    if (equalCount != foundWhiteTria.Count && equalCount != 0)
+                    {
+                        foundWhiteTria.Add(current[notEqual]);
+                        AnnouncementTypeLabel.Content = "Tria";
+                        AnnouncementPlayerLabel.Content = Player2Name;
+                        AnnouncementPlayerLabel.Visibility = Visibility.Visible;
+                        AnnouncementConstantLabel.Visibility = Visibility.Visible;
+                        AnnouncementTypeLabel.Visibility = Visibility.Visible;
+                    }
+                }
+            }
+            else
+            {
+                if (foundBlackTria.Count > current.Count)
+                {
+                    foundBlackTria = current;
+                }
+                else if (foundBlackTria.Count < current.Count)
+                {
+                    foundBlackTria.Add(current[current.Count - 1]);
+                    AnnouncementTypeLabel.Content = "Tria";
+                    AnnouncementPlayerLabel.Content = Player1Name;
+                    AnnouncementPlayerLabel.Visibility = Visibility.Visible;
+                    AnnouncementConstantLabel.Visibility = Visibility.Visible;
+                    AnnouncementTypeLabel.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    int notEqual = -1;
+                    int equalCount = 0;
+                    for (int j = 0; j < current.Count; j++)
+                    {
+                        for (int i = 0; i < current.Count; i++)
+                        {
+                            if (EqualLists(foundBlackTria[j], current[i]))
+                            {
+                                equalCount++;
+                                notEqual = i;
+                            }
+                        }
+                    }
+                    if (equalCount != foundBlackTria.Count && equalCount != 0)
+                    {
+                        foundBlackTria.Add(current[notEqual]);
+                        AnnouncementTypeLabel.Content = "Tria";
+                        AnnouncementPlayerLabel.Content = Player1Name;
+                        AnnouncementPlayerLabel.Visibility = Visibility.Visible;
+                        AnnouncementConstantLabel.Visibility = Visibility.Visible;
+                        AnnouncementTypeLabel.Visibility = Visibility.Visible;
+                    }
+                }
+            }
         }
         //Collin and Jordon
         public bool CheckForCapture(int index)
