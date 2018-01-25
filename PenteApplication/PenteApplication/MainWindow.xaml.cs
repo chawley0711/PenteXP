@@ -29,13 +29,14 @@ namespace PenteApplication
         //unit tests
         //play again
         //save/load
+        public GameData GameState = new GameData();
         int cputimerSec = 2;
         int LoadSize;
         public string Player1Name;
         public string Player2Name;
         public bool pvp = false;
         public string CpuName = "GOD";
-        public List<Intersection> gameIntersections;
+        public List<Intersection> gameIntersections = new List<Intersection>();
         public List<List<Intersection>> gameIntersections2D;
         public Timer turnTimer;
         public Timer CPUTimer;
@@ -114,8 +115,7 @@ namespace PenteApplication
         }
         //Jordon and Collin
         public int FillGameGrid(int size)
-        {
-            gameIntersections = new List<Intersection>();
+        {            
             Gameboard.Rows = size;
             Gameboard.Columns = size;
             GameButtons.Rows = size + 1;
@@ -143,7 +143,7 @@ namespace PenteApplication
                     intersection.HorizontalContentAlignment = HorizontalAlignment.Stretch;
                     intersection.VerticalContentAlignment = VerticalAlignment.Stretch;
                     Binding b = new Binding("IntersectionFill");
-                    b.Mode = BindingMode.OneWay;
+                    b.Mode = BindingMode.TwoWay;
                     intersection.DataContext = inter;
                     b.Converter = new ColorConverter();
                     intersection.SetBinding(Button.BackgroundProperty, b);
@@ -154,6 +154,56 @@ namespace PenteApplication
                 
             }
             return Gameboard.Columns;
+        }
+        //Austin and Jarrett
+        public int FillGameGridFromLoad(int size)
+        {
+            Gameboard.Rows = size;
+            Gameboard.Columns = size;
+            GameButtons.Rows = size + 1;
+            GameButtons.Columns = size + 1;
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    Label filler = new Label();
+                    filler.Background = Brushes.DarkGoldenrod;
+                    filler.BorderThickness = new Thickness(.75);
+                    Gameboard.Children.Add(filler);
+                }
+            }
+            GameButtons.Height = 700 - ((size+1) * 1.8);
+            GameButtons.Width = 700 - ((size+1) * 1.8);
+
+            for (int i = 0; i < ((size + 1)*(size + 1)); i++)
+            {
+                    Button intersection = new Button();
+                    Intersection inter = gameIntersections[i];
+                if (inter.IntersectionFill == Fill.Empty)
+                {
+                    intersection.Opacity = 0;
+
+                }
+                else
+                {
+                    intersection.Opacity = 1;
+                }
+                    intersection.HorizontalContentAlignment = HorizontalAlignment.Stretch;
+                    intersection.VerticalContentAlignment = VerticalAlignment.Stretch;
+                    Binding b = new Binding("IntersectionFill");
+                    b.Mode = BindingMode.OneWay;
+                    intersection.DataContext = inter;
+                    b.Converter = new ColorConverter();
+                    intersection.SetBinding(Button.BackgroundProperty, b);
+                    intersection.Click += PlaceStone_Click;
+                    GameButtons.Children.Add(intersection);
+            }
+            return Gameboard.Columns;
+        }
+        //Austin and Jarrett
+        public void FlipOnLoad()
+        {
+            
         }
         //Austin and Jarrett
         public void PvPButton_Click(object sender, RoutedEventArgs e)
@@ -1064,18 +1114,19 @@ namespace PenteApplication
         }
         private void Save_Click(object sender, RoutedEventArgs e)
         {
+            GameState.P1Name = Player1Name;
+            GameState.P2Name = Player2Name;
+            GameState.Player1Cap = P1Cap;
+            GameState.Player2Cap = P2Cap;
+            GameState.Player1Turn = P1Turn;
+            GameState.pvp = pvp;
+            GameState.buttons = gameIntersections;
             SaveFileDialog s = new SaveFileDialog();
             s.Filter = ".pnt | Pente";
             s.ShowDialog();
             IFormatter format = new BinaryFormatter();
-            Stream slip = new FileStream(s.FileName, FileMode.Append, FileAccess.Write, FileShare.None);
-            format.Serialize(slip, gameIntersections);
-            //format.Serialize(slip, Player1Name);
-            //format.Serialize(slip, Player2Name);
-            //format.Serialize(slip, P1Cap);
-            //format.Serialize(slip, P2Cap);
-            //format.Serialize(slip, P1Turn);
-
+            Stream slip = new FileStream(s.FileName, FileMode.Create, FileAccess.Write, FileShare.None);
+            format.Serialize(slip, GameState);
         }
         private void SaveAs_Click(object sender, RoutedEventArgs e)
         {
@@ -1093,12 +1144,23 @@ namespace PenteApplication
             o.ShowDialog();
             IFormatter format = new BinaryFormatter();
             Stream slip = new FileStream(o.FileName, FileMode.Open);
-            gameIntersections = new List<Intersection>();
-            gameIntersections = (List<Intersection>)format.Deserialize(slip);
+            GameState = (GameData)format.Deserialize(slip);
+            gameIntersections = GameState.buttons;
+            lblP1Captures.Content = GameState.P1Name;
+            lblP2Captures.Content = GameState.P2Name;
+            lblP1Captures.Content = GameState.Player1Cap;
+            lblP2Captures.Content = GameState.Player2Cap;
+            Player1Name = GameState.P1Name;
+            Player2Name = GameState.P2Name;
+            P1Cap = GameState.Player1Cap;
+            P2Cap = GameState.Player2Cap;
+            P1Turn = GameState.Player1Turn;
+            pvp = GameState.pvp;
             LoadSize = ((int)Math.Sqrt(gameIntersections.Count())) - 1;
-            //GameButtons.Children.Clear();
-            //Gameboard.Children.Clear();
-            FillGameGrid(LoadSize);
+            GameButtons.Children.Clear();
+            Gameboard.Children.Clear();
+            FillGameGridFromLoad(LoadSize);
+            FlipOnLoad();
         }
     }
 } 
