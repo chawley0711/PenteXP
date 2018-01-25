@@ -175,7 +175,11 @@ namespace PenteApplication
             return Gameboard.Columns;
         }
         //Austin and Jarrett
-        public int FillGameGridFromLoad(int size)
+        /// <summary>
+        /// redraws the game to the way it looked when it was saved
+        /// </summary>
+        /// <param name="size">The number of columns and rows that existed in the saved game</param>
+        public void FillGameGridFromLoad(int size)
         {
             Gameboard.Rows = size;
             Gameboard.Columns = size;
@@ -217,12 +221,6 @@ namespace PenteApplication
                     intersection.Click += PlaceStone_Click;
                     GameButtons.Children.Add(intersection);
             }
-            return Gameboard.Columns;
-        }
-        //Austin and Jarrett
-        public void FlipOnLoad()
-        {
-            
         }
         //Austin and Jarrett
         /// <summary>
@@ -1220,6 +1218,12 @@ namespace PenteApplication
                 }
             } while (!isValid);
         }
+        //Austin and Jarrett
+        /// <summary>
+        /// Serializes everything necessary to save the game
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             GameState.P1Name = Player1Name;
@@ -1236,15 +1240,12 @@ namespace PenteApplication
             Stream slip = new FileStream(s.FileName, FileMode.Create, FileAccess.Write, FileShare.None);
             format.Serialize(slip, GameState);
         }
-        private void SaveAs_Click(object sender, RoutedEventArgs e)
-        {
-            SaveFileDialog s = new SaveFileDialog();
-            s.Filter = ".pnt | Pente";
-            s.ShowDialog();
-            IFormatter format = new BinaryFormatter();
-            Stream slip = new FileStream(s.FileName, FileMode.Create, FileAccess.Write, FileShare.None);
-            //format.Serialize(slip, );
-        }
+        //Austin and Jarrett
+        /// <summary>
+        /// Deserializes everything necessary to redraw the saved game
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Open_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog o = new OpenFileDialog();
@@ -1268,7 +1269,6 @@ namespace PenteApplication
             GameButtons.Children.Clear();
             Gameboard.Children.Clear();
             FillGameGridFromLoad(LoadSize);
-            FlipOnLoad();
         }
     }
 } 
