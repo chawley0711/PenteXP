@@ -837,7 +837,7 @@ namespace PenteApplication
                     catch (Exception e) { }
                 }
             });
-           return CheckCurrentAndFoundTria(current, color);
+            CheckCurrentAndFoundTria(current, color);
         }
         //Collin and Jordon
         //Checks the board and compares trias to the ones found on the last run
@@ -930,7 +930,6 @@ namespace PenteApplication
                     }
                 }
             }
-            return found;
         }
         //Collin and Jordon
         //Checks for captures
