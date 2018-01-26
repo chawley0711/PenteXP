@@ -12,8 +12,6 @@
     <Window.CommandBindings>
         <CommandBinding Command="Save"
                         Executed="Save_Click"/>
-        <CommandBinding Command="SaveAs"
-                        Executed="SaveAs_Click"/>
         <CommandBinding Command="Open"
                         Executed="Open_Click"/>
     </Window.CommandBindings>

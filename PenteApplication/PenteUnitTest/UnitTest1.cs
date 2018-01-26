@@ -441,16 +441,406 @@ namespace PenteUnitTest
             Assert.AreEqual(false, test);
         }
         //Austin and Jarrett
-        //[TestMethod]
-        //public void CheckVerticalTria()
-        //{
-        //    MainWindow mw = new MainWindow();
-        //    mw.FillGameGrid(8);
-        //    mw.gameIntersections[0].IntersectionFill = Fill.Black;
-        //    mw.gameIntersections[9].IntersectionFill = Fill.Black;
-        //    mw.gameIntersections[18].IntersectionFill = Fill.Black;
-        //    bool test = mw.CheckForTria(Fill.Black);
-        //    Assert.AreEqual(true, test);
-        //}
+        [TestMethod]
+        public void CheckVerticalTriaBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.Black;
+            mw.gameIntersections[9].IntersectionFill = Fill.Black;
+            mw.gameIntersections[18].IntersectionFill = Fill.Black;
+            bool test = mw.CheckForTria(Fill.Black);
+            Assert.AreEqual(true, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckHorizontalTriaBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.Black;
+            mw.gameIntersections[1].IntersectionFill = Fill.Black;
+            mw.gameIntersections[2].IntersectionFill = Fill.Black;
+            bool test = mw.CheckForTria(Fill.Black);
+            Assert.AreEqual(true, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckDiagonalTriaBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.Black;
+            mw.gameIntersections[10].IntersectionFill = Fill.Black;
+            mw.gameIntersections[20].IntersectionFill = Fill.Black;
+            bool test = mw.CheckForTria(Fill.Black);
+            Assert.AreEqual(true, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckVerticalNonTriaBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.Black;
+            mw.gameIntersections[9].IntersectionFill = Fill.Black;
+            mw.gameIntersections[27].IntersectionFill = Fill.White;
+            mw.gameIntersections[18].IntersectionFill = Fill.Black;
+            bool test = mw.CheckForTria(Fill.Black);
+            Assert.AreEqual(false, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckHorizontalNonTriaBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.Black;
+            mw.gameIntersections[1].IntersectionFill = Fill.Black;
+            mw.gameIntersections[3].IntersectionFill = Fill.White;
+            mw.gameIntersections[2].IntersectionFill = Fill.Black;
+            bool test = mw.CheckForTria(Fill.Black);
+            Assert.AreEqual(false, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckDiagonalNonTriaBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.Black;
+            mw.gameIntersections[10].IntersectionFill = Fill.Black;
+            mw.gameIntersections[30].IntersectionFill = Fill.White;
+            mw.gameIntersections[20].IntersectionFill = Fill.Black;
+            bool test = mw.CheckForTria(Fill.Black);
+            Assert.AreEqual(false, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckVerticalTesseraBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.Black;
+            mw.gameIntersections[9].IntersectionFill = Fill.Black;
+            mw.gameIntersections[18].IntersectionFill = Fill.Black;
+            mw.gameIntersections[27].IntersectionFill = Fill.Black;
+            bool test = mw.CheckForTessera(Fill.Black);
+            Assert.AreEqual(true, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckHorizontalTesseraBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.Black;
+            mw.gameIntersections[1].IntersectionFill = Fill.Black;
+            mw.gameIntersections[2].IntersectionFill = Fill.Black;
+            mw.gameIntersections[3].IntersectionFill = Fill.Black;
+            bool test = mw.CheckForTessera(Fill.Black);
+            Assert.AreEqual(true, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckDiagonalTesseriaBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.Black;
+            mw.gameIntersections[10].IntersectionFill = Fill.Black;
+            mw.gameIntersections[20].IntersectionFill = Fill.Black;
+            mw.gameIntersections[30].IntersectionFill = Fill.Black;
+            bool test = mw.CheckForTessera(Fill.Black);
+            Assert.AreEqual(true, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckVerticalNonTesseraBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.White;
+            mw.gameIntersections[9].IntersectionFill = Fill.Black;
+            mw.gameIntersections[27].IntersectionFill = Fill.Black;
+            mw.gameIntersections[18].IntersectionFill = Fill.Black;
+            mw.gameIntersections[36].IntersectionFill = Fill.Black;
+            mw.gameIntersections[45].IntersectionFill = Fill.White;
+            bool test = mw.CheckForTria(Fill.Black);
+            Assert.AreEqual(false, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckHorizontalNonTesseraBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.White;
+            mw.gameIntersections[1].IntersectionFill = Fill.Black;
+            mw.gameIntersections[2].IntersectionFill = Fill.Black;
+            mw.gameIntersections[3].IntersectionFill = Fill.Black;
+            mw.gameIntersections[4].IntersectionFill = Fill.Black;
+            mw.gameIntersections[5].IntersectionFill = Fill.White;
+            bool test = mw.CheckForTria(Fill.Black);
+            Assert.AreEqual(false, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckDiagonalNonTesseraBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.White;
+            mw.gameIntersections[10].IntersectionFill = Fill.Black;
+            mw.gameIntersections[20].IntersectionFill = Fill.Black;
+            mw.gameIntersections[30].IntersectionFill = Fill.Black;
+            mw.gameIntersections[40].IntersectionFill = Fill.Black;
+            mw.gameIntersections[50].IntersectionFill = Fill.White;
+            bool test = mw.CheckForTria(Fill.Black);
+            Assert.AreEqual(false, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckVerticalWinBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.Black;
+            mw.gameIntersections[9].IntersectionFill = Fill.Black;
+            mw.gameIntersections[18].IntersectionFill = Fill.Black;
+            mw.gameIntersections[27].IntersectionFill = Fill.Black;
+            mw.gameIntersections[36].IntersectionFill = Fill.Black;
+            bool test = mw.CheckForWin(Fill.Black);
+            Assert.AreEqual(true, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckHorizontalWinBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.Black;
+            mw.gameIntersections[1].IntersectionFill = Fill.Black;
+            mw.gameIntersections[2].IntersectionFill = Fill.Black;
+            mw.gameIntersections[3].IntersectionFill = Fill.Black;
+            mw.gameIntersections[4].IntersectionFill = Fill.Black;
+            bool test = mw.CheckForTessera(Fill.Black);
+            Assert.AreEqual(true, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckDiagonalWinBlack()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.Black;
+            mw.gameIntersections[10].IntersectionFill = Fill.Black;
+            mw.gameIntersections[20].IntersectionFill = Fill.Black;
+            mw.gameIntersections[30].IntersectionFill = Fill.Black;
+            mw.gameIntersections[40].IntersectionFill = Fill.Black;
+            bool test = mw.CheckForTessera(Fill.Black);
+            Assert.AreEqual(true, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckVerticalTriaWhite()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.White;
+            mw.gameIntersections[9].IntersectionFill = Fill.White;
+            mw.gameIntersections[18].IntersectionFill = Fill.White;
+            bool test = mw.CheckForTria(Fill.White);
+            Assert.AreEqual(true, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckHorizontalTriaWhite()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.White;
+            mw.gameIntersections[1].IntersectionFill = Fill.White;
+            mw.gameIntersections[2].IntersectionFill = Fill.White;
+            bool test = mw.CheckForTria(Fill.White);
+            Assert.AreEqual(true, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckDiagonalTriaWhite()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.White;
+            mw.gameIntersections[10].IntersectionFill = Fill.White;
+            mw.gameIntersections[20].IntersectionFill = Fill.White;
+            bool test = mw.CheckForTria(Fill.White);
+            Assert.AreEqual(true, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckVerticalNonTriaWhite()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.White;
+            mw.gameIntersections[9].IntersectionFill = Fill.White;
+            mw.gameIntersections[27].IntersectionFill = Fill.Black;
+            mw.gameIntersections[18].IntersectionFill = Fill.White;
+            bool test = mw.CheckForTria(Fill.White);
+            Assert.AreEqual(false, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckHorizontalNonTriaWhite()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.White;
+            mw.gameIntersections[1].IntersectionFill = Fill.White;
+            mw.gameIntersections[3].IntersectionFill = Fill.Black;
+            mw.gameIntersections[2].IntersectionFill = Fill.White;
+            bool test = mw.CheckForTria(Fill.White);
+            Assert.AreEqual(false, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckDiagonalNonTriaWhite()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.White;
+            mw.gameIntersections[10].IntersectionFill = Fill.White;
+            mw.gameIntersections[30].IntersectionFill = Fill.Black;
+            mw.gameIntersections[20].IntersectionFill = Fill.White;
+            bool test = mw.CheckForTria(Fill.White);
+            Assert.AreEqual(false, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckVerticalTesseraWhite()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.White;
+            mw.gameIntersections[9].IntersectionFill = Fill.White;
+            mw.gameIntersections[18].IntersectionFill = Fill.White;
+            mw.gameIntersections[27].IntersectionFill = Fill.White;
+            bool test = mw.CheckForTessera(Fill.White);
+            Assert.AreEqual(true, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckHorizontalTesseraWhite()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.White;
+            mw.gameIntersections[1].IntersectionFill = Fill.White;
+            mw.gameIntersections[2].IntersectionFill = Fill.White;
+            mw.gameIntersections[3].IntersectionFill = Fill.White;
+            bool test = mw.CheckForTessera(Fill.White);
+            Assert.AreEqual(true, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckDiagonalTesseriaWhite()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.White;
+            mw.gameIntersections[10].IntersectionFill = Fill.White;
+            mw.gameIntersections[20].IntersectionFill = Fill.White;
+            mw.gameIntersections[30].IntersectionFill = Fill.White;
+            bool test = mw.CheckForTessera(Fill.White);
+            Assert.AreEqual(true, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckVerticalNonTesseraWhite()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.Black;
+            mw.gameIntersections[9].IntersectionFill = Fill.White;
+            mw.gameIntersections[27].IntersectionFill = Fill.White;
+            mw.gameIntersections[18].IntersectionFill = Fill.White;
+            mw.gameIntersections[36].IntersectionFill = Fill.White;
+            mw.gameIntersections[45].IntersectionFill = Fill.Black;
+            bool test = mw.CheckForTria(Fill.White);
+            Assert.AreEqual(false, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckHorizontalNonTesseraWhite()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.Black;
+            mw.gameIntersections[1].IntersectionFill = Fill.White;
+            mw.gameIntersections[2].IntersectionFill = Fill.White;
+            mw.gameIntersections[3].IntersectionFill = Fill.White;
+            mw.gameIntersections[4].IntersectionFill = Fill.White;
+            mw.gameIntersections[5].IntersectionFill = Fill.Black;
+            bool test = mw.CheckForTria(Fill.White);
+            Assert.AreEqual(false, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckDiagonalNonTesseraWhite()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.Black;
+            mw.gameIntersections[10].IntersectionFill = Fill.White;
+            mw.gameIntersections[20].IntersectionFill = Fill.White;
+            mw.gameIntersections[30].IntersectionFill = Fill.White;
+            mw.gameIntersections[40].IntersectionFill = Fill.White;
+            mw.gameIntersections[50].IntersectionFill = Fill.Black;
+            bool test = mw.CheckForTria(Fill.White);
+            Assert.AreEqual(false, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckVerticalWinWhite()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.White;
+            mw.gameIntersections[9].IntersectionFill = Fill.White;
+            mw.gameIntersections[18].IntersectionFill = Fill.White;
+            mw.gameIntersections[27].IntersectionFill = Fill.White;
+            mw.gameIntersections[36].IntersectionFill = Fill.White;
+            bool test = mw.CheckForWin(Fill.White);
+            Assert.AreEqual(true, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckHorizontalWinWhite()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.White;
+            mw.gameIntersections[1].IntersectionFill = Fill.White;
+            mw.gameIntersections[2].IntersectionFill = Fill.White;
+            mw.gameIntersections[3].IntersectionFill = Fill.White;
+            mw.gameIntersections[4].IntersectionFill = Fill.White;
+            bool test = mw.CheckForTessera(Fill.White);
+            Assert.AreEqual(true, test);
+        }
+        //Austin and Jarrett
+        [TestMethod]
+        public void CheckDiagonalWinWhite()
+        {
+            MainWindow mw = new MainWindow();
+            mw.FillGameGrid(8);
+            mw.gameIntersections[0].IntersectionFill = Fill.White;
+            mw.gameIntersections[10].IntersectionFill = Fill.White;
+            mw.gameIntersections[20].IntersectionFill = Fill.White;
+            mw.gameIntersections[30].IntersectionFill = Fill.White;
+            mw.gameIntersections[40].IntersectionFill = Fill.White;
+            bool test = mw.CheckForTessera(Fill.White);
+            Assert.AreEqual(true, test);
+        }
     }
 }

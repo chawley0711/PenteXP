@@ -201,11 +201,6 @@ namespace PenteApplication
             return Gameboard.Columns;
         }
         //Austin and Jarrett
-        public void FlipOnLoad()
-        {
-            
-        }
-        //Austin and Jarrett
         /// <summary>
         /// Hides the main menu, shows the naming menu, and sets PVP to true
         /// </summary>
@@ -695,7 +690,7 @@ namespace PenteApplication
             return equal;
         }
         //Collin and Jordon
-        public void CheckForTria(Fill color)
+        public bool CheckForTria(Fill color)
         {
             List<int> intersections = gameIntersections.Where(x => x.IntersectionFill == color).Select(y => gameIntersections.IndexOf(y)).ToList();
             List<List<int>> current = new List<List<int>>();
@@ -773,11 +768,12 @@ namespace PenteApplication
                     catch (Exception e) { }
                 }
             });
-            CheckCurrentAndFoundTria(current, color);
+           return CheckCurrentAndFoundTria(current, color);
         }
         //Collin and Jordon
-        public void CheckCurrentAndFoundTria(List<List<int>> current, Fill color)
+        public bool CheckCurrentAndFoundTria(List<List<int>> current, Fill color)
         {
+            bool found = false;
             if (color == Fill.White)
             {
                 if (foundWhiteTria.Count > current.Count)
@@ -787,6 +783,7 @@ namespace PenteApplication
                 else if (foundWhiteTria.Count < current.Count)
                 {
                     foundWhiteTria.Add(current[current.Count - 1]);
+                    found = true;
                     AnnouncementTypeLabel.Content = "Tria";
                     AnnouncementPlayerLabel.Content = Player2Name;
                     AnnouncementPlayerLabel.Visibility = Visibility.Visible;
@@ -811,6 +808,7 @@ namespace PenteApplication
                     if (equalCount != foundWhiteTria.Count && equalCount != 0)
                     {
                         foundWhiteTria.Add(current[notEqual]);
+                        found = true;
                         AnnouncementTypeLabel.Content = "Tria";
                         AnnouncementPlayerLabel.Content = Player2Name;
                         AnnouncementPlayerLabel.Visibility = Visibility.Visible;
@@ -828,6 +826,7 @@ namespace PenteApplication
                 else if (foundBlackTria.Count < current.Count)
                 {
                     foundBlackTria.Add(current[current.Count - 1]);
+                    found = true;
                     AnnouncementTypeLabel.Content = "Tria";
                     AnnouncementPlayerLabel.Content = Player1Name;
                     AnnouncementPlayerLabel.Visibility = Visibility.Visible;
@@ -852,6 +851,7 @@ namespace PenteApplication
                     if (equalCount != foundBlackTria.Count && equalCount != 0)
                     {
                         foundBlackTria.Add(current[notEqual]);
+                        found = true;
                         AnnouncementTypeLabel.Content = "Tria";
                         AnnouncementPlayerLabel.Content = Player1Name;
                         AnnouncementPlayerLabel.Visibility = Visibility.Visible;
@@ -860,6 +860,7 @@ namespace PenteApplication
                     }
                 }
             }
+            return found;
         }
         //Collin and Jordon
         public bool CheckForCapture(int index)
@@ -1168,15 +1169,6 @@ namespace PenteApplication
             Stream slip = new FileStream(s.FileName, FileMode.Create, FileAccess.Write, FileShare.None);
             format.Serialize(slip, GameState);
         }
-        private void SaveAs_Click(object sender, RoutedEventArgs e)
-        {
-            SaveFileDialog s = new SaveFileDialog();
-            s.Filter = ".pnt | Pente";
-            s.ShowDialog();
-            IFormatter format = new BinaryFormatter();
-            Stream slip = new FileStream(s.FileName, FileMode.Create, FileAccess.Write, FileShare.None);
-            //format.Serialize(slip, );
-        }
         private void Open_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog o = new OpenFileDialog();
@@ -1200,7 +1192,6 @@ namespace PenteApplication
             GameButtons.Children.Clear();
             Gameboard.Children.Clear();
             FillGameGridFromLoad(LoadSize);
-            FlipOnLoad();
         }
     }
 } 
